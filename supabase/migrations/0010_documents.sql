@@ -17,9 +17,9 @@ alter table public.documents enable row level security;
 -- collection of their own company.
 create policy "documents_select" on public.documents
   for select using (
-    tenant_id = auth.tenant_id() and (
-      auth.is_system_admin()
-      or auth.current_role_claim() in ('tenant_admin', 'tenant_operator', 'tenant_driver')
+    tenant_id = public.tenant_id() and (
+      public.is_system_admin()
+      or public.current_role_claim() in ('tenant_admin', 'tenant_operator', 'tenant_driver')
       or exists (
         select 1 from public.collections c
         join public.profiles p on p.id = auth.uid()
@@ -31,22 +31,22 @@ create policy "documents_select" on public.documents
 -- Issuing CCO/MTR documents is an administrative action, not a client one.
 create policy "documents_insert" on public.documents
   for insert with check (
-    tenant_id = auth.tenant_id()
-    and (auth.is_system_admin() or auth.current_role_claim() in ('tenant_admin', 'tenant_operator'))
+    tenant_id = public.tenant_id()
+    and (public.is_system_admin() or public.current_role_claim() in ('tenant_admin', 'tenant_operator'))
   );
 
 create policy "documents_update" on public.documents
   for update using (
-    tenant_id = auth.tenant_id()
-    and (auth.is_system_admin() or auth.current_role_claim() in ('tenant_admin', 'tenant_operator'))
+    tenant_id = public.tenant_id()
+    and (public.is_system_admin() or public.current_role_claim() in ('tenant_admin', 'tenant_operator'))
   )
   with check (
-    tenant_id = auth.tenant_id()
-    and (auth.is_system_admin() or auth.current_role_claim() in ('tenant_admin', 'tenant_operator'))
+    tenant_id = public.tenant_id()
+    and (public.is_system_admin() or public.current_role_claim() in ('tenant_admin', 'tenant_operator'))
   );
 
 create policy "documents_delete" on public.documents
   for delete using (
-    tenant_id = auth.tenant_id()
-    and (auth.is_system_admin() or auth.current_role_claim() = 'tenant_admin')
+    tenant_id = public.tenant_id()
+    and (public.is_system_admin() or public.current_role_claim() = 'tenant_admin')
   );

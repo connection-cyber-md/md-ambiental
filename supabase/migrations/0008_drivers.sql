@@ -15,11 +15,11 @@ create table public.drivers (
 alter table public.drivers enable row level security;
 
 create policy "drivers_select" on public.drivers for select
-  using (tenant_id = auth.tenant_id() or auth.is_system_admin());
+  using (tenant_id = public.tenant_id() or public.is_system_admin());
 create policy "drivers_insert" on public.drivers for insert
-  with check (tenant_id = auth.tenant_id() or auth.is_system_admin());
+  with check (tenant_id = public.tenant_id() or public.is_system_admin());
 create policy "drivers_update" on public.drivers for update
-  using (tenant_id = auth.tenant_id() or auth.is_system_admin())
-  with check (tenant_id = auth.tenant_id() or auth.is_system_admin());
+  using (tenant_id = public.tenant_id() or public.is_system_admin())
+  with check (tenant_id = public.tenant_id() or public.is_system_admin());
 create policy "drivers_delete" on public.drivers for delete
-  using (tenant_id = auth.tenant_id() or auth.is_system_admin());
+  using (tenant_id = public.tenant_id() or public.is_system_admin());

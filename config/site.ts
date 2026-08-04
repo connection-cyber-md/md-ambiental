@@ -17,6 +17,12 @@ export const siteConfig = {
     rating: "5,0",
     reviewCount: 38,
   },
+  // TODO: substituir pelos perfis reais assim que forem informados.
+  social: {
+    instagram: "#",
+    facebook: "#",
+    linkedin: "#",
+  },
 } as const;
 
 export function buildWhatsAppLink(message: string) {

@@ -17,25 +17,25 @@ alter table public.bpo_tasks enable row level security;
 -- 'client' role (a generator company's own contact).
 create policy "bpo_tasks_select" on public.bpo_tasks for select
   using (
-    auth.is_system_admin()
-    or (tenant_id = auth.tenant_id() and auth.current_role_claim() <> 'client')
+    public.is_system_admin()
+    or (tenant_id = public.tenant_id() and public.current_role_claim() <> 'client')
   );
 create policy "bpo_tasks_insert" on public.bpo_tasks for insert
   with check (
-    auth.is_system_admin()
-    or (tenant_id = auth.tenant_id() and auth.current_role_claim() <> 'client')
+    public.is_system_admin()
+    or (tenant_id = public.tenant_id() and public.current_role_claim() <> 'client')
   );
 create policy "bpo_tasks_update" on public.bpo_tasks for update
   using (
-    auth.is_system_admin()
-    or (tenant_id = auth.tenant_id() and auth.current_role_claim() <> 'client')
+    public.is_system_admin()
+    or (tenant_id = public.tenant_id() and public.current_role_claim() <> 'client')
   )
   with check (
-    auth.is_system_admin()
-    or (tenant_id = auth.tenant_id() and auth.current_role_claim() <> 'client')
+    public.is_system_admin()
+    or (tenant_id = public.tenant_id() and public.current_role_claim() <> 'client')
   );
 create policy "bpo_tasks_delete" on public.bpo_tasks for delete
   using (
-    auth.is_system_admin()
-    or (tenant_id = auth.tenant_id() and auth.current_role_claim() <> 'client')
+    public.is_system_admin()
+    or (tenant_id = public.tenant_id() and public.current_role_claim() <> 'client')
   );

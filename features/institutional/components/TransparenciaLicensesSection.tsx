@@ -2,7 +2,7 @@ import { transparencyContent } from "@/features/institutional/content/site-copy"
 
 export function TransparenciaLicensesSection() {
   return (
-    <section className="py-20 md:py-28 bg-paper-dim">
+    <section className="py-[50px] md:py-[70px] bg-paper-dim">
       <div className="max-w-[1180px] mx-auto px-6">
         <div className="max-w-[640px] mb-10">
           <p className="eyebrow">{transparencyContent.eyebrow}</p>

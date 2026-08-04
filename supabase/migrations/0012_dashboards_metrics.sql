@@ -16,22 +16,22 @@ alter table public.dashboards_metrics enable row level security;
 -- to the 'client' role.
 create policy "dashboards_metrics_select" on public.dashboards_metrics for select
   using (
-    auth.is_system_admin()
-    or (tenant_id = auth.tenant_id() and auth.current_role_claim() <> 'client')
+    public.is_system_admin()
+    or (tenant_id = public.tenant_id() and public.current_role_claim() <> 'client')
   );
 create policy "dashboards_metrics_insert" on public.dashboards_metrics for insert
   with check (
-    auth.is_system_admin()
-    or (tenant_id = auth.tenant_id() and auth.current_role_claim() in ('tenant_admin', 'tenant_operator'))
+    public.is_system_admin()
+    or (tenant_id = public.tenant_id() and public.current_role_claim() in ('tenant_admin', 'tenant_operator'))
   );
 create policy "dashboards_metrics_update" on public.dashboards_metrics for update
   using (
-    auth.is_system_admin()
-    or (tenant_id = auth.tenant_id() and auth.current_role_claim() in ('tenant_admin', 'tenant_operator'))
+    public.is_system_admin()
+    or (tenant_id = public.tenant_id() and public.current_role_claim() in ('tenant_admin', 'tenant_operator'))
   )
   with check (
-    auth.is_system_admin()
-    or (tenant_id = auth.tenant_id() and auth.current_role_claim() in ('tenant_admin', 'tenant_operator'))
+    public.is_system_admin()
+    or (tenant_id = public.tenant_id() and public.current_role_claim() in ('tenant_admin', 'tenant_operator'))
   );
 create policy "dashboards_metrics_delete" on public.dashboards_metrics for delete
-  using (auth.is_system_admin() or (tenant_id = auth.tenant_id() and auth.current_role_claim() = 'tenant_admin'));
+  using (public.is_system_admin() or (tenant_id = public.tenant_id() and public.current_role_claim() = 'tenant_admin'));

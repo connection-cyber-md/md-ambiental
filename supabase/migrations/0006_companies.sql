@@ -31,14 +31,14 @@ create table public.companies (
 alter table public.companies enable row level security;
 
 create policy "companies_select" on public.companies for select
-  using (tenant_id = auth.tenant_id() or auth.is_system_admin());
+  using (tenant_id = public.tenant_id() or public.is_system_admin());
 create policy "companies_insert" on public.companies for insert
-  with check (tenant_id = auth.tenant_id() or auth.is_system_admin());
+  with check (tenant_id = public.tenant_id() or public.is_system_admin());
 create policy "companies_update" on public.companies for update
-  using (tenant_id = auth.tenant_id() or auth.is_system_admin())
-  with check (tenant_id = auth.tenant_id() or auth.is_system_admin());
+  using (tenant_id = public.tenant_id() or public.is_system_admin())
+  with check (tenant_id = public.tenant_id() or public.is_system_admin());
 create policy "companies_delete" on public.companies for delete
-  using (tenant_id = auth.tenant_id() or auth.is_system_admin());
+  using (tenant_id = public.tenant_id() or public.is_system_admin());
 
 -- Now that companies exists, wire up the forward-reference from profiles
 -- (see note in 0005_profiles.sql).

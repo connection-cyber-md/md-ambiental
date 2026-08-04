@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { AuthContext } from "@/lib/auth/context";
+import { LogoMark } from "@/components/ui/LogoMark";
 
 const ROLE_LABEL: Record<string, string> = {
   system_admin: "System Admin",
@@ -24,7 +24,7 @@ export function AppShellNav({
       <div className="max-w-[1180px] mx-auto px-6 py-4 flex items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/brand/logo.png" alt="MD Ambiental" width={28} height={28} className="h-7 w-auto" />
+            <LogoMark size={40} />
           </Link>
           <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-steel-light">{title}</span>
         </div>

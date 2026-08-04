@@ -3,7 +3,7 @@ import { portalCta } from "@/features/institutional/content/site-copy";
 
 export function PortalClienteCTA() {
   return (
-    <section className="py-16 bg-brand-green-deep">
+    <section className="py-[40px] bg-black">
       <div className="max-w-[1180px] mx-auto px-6 flex items-center justify-between gap-8 flex-wrap">
         <div className="max-w-[560px]">
           <p className="eyebrow">{portalCta.eyebrow}</p>

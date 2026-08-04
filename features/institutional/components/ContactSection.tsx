@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/Button";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { siteConfig, buildWhatsAppLink } from "@/config/site";
 import { contactContent } from "@/features/institutional/content/site-copy";
 
 export function ContactSection() {
   return (
-    <section className="py-20 md:py-28 bg-brand-green-deep text-white" id="contato">
+    <section className="py-[50px] md:py-[70px] bg-brand-green-deep text-white" id="contato">
       <div className="max-w-[1180px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-11 md:gap-16 items-start">
         <div>
           <p className="eyebrow">{contactContent.eyebrow}</p>
@@ -49,11 +50,13 @@ export function ContactSection() {
             condições para o seu estabelecimento.
           </p>
           <Button
+            variant="whatsapp"
             href={buildWhatsAppLink("Olá! Quero agendar uma consulta com a MD Ambiental.")}
             target="_blank"
             rel="noopener"
             className="w-full justify-center py-4 text-[16px]"
           >
+            <WhatsAppIcon className="w-[18px] h-[18px]" />
             Agendar consulta agora
           </Button>
           <span className="block font-mono text-[14px] text-steel mt-4 text-center">

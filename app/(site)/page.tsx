@@ -6,17 +6,25 @@ import { TransparenciaLicensesSection } from "@/features/institutional/component
 import { ReviewsSection } from "@/features/institutional/components/ReviewsSection";
 import { PortalClienteCTA } from "@/features/institutional/components/PortalClienteCTA";
 import { ContactSection } from "@/features/institutional/components/ContactSection";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <SectionDivider index={0} />
       <CompromissoAmbientalSection />
+      <SectionDivider index={1} />
       <ServicosSection />
+      <SectionDivider index={2} />
       <ComoFuncionaSection />
+      <SectionDivider index={3} />
       <TransparenciaLicensesSection />
+      <SectionDivider index={4} />
       <ReviewsSection />
+      <SectionDivider index={5} />
       <PortalClienteCTA />
+      <SectionDivider index={6} />
       <ContactSection />
     </>
   );

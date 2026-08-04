@@ -3,7 +3,7 @@ import { missionContent } from "@/features/institutional/content/site-copy";
 
 export function CompromissoAmbientalSection() {
   return (
-    <section className="py-20 md:py-28 bg-paper" id="sobre">
+    <section className="py-[50px] md:py-[70px] bg-paper" id="sobre">
       <div className="max-w-[1180px] mx-auto px-6 grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-11 md:gap-16 items-center">
         <div>
           <p className="eyebrow">{missionContent.eyebrow}</p>

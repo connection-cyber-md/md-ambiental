@@ -1,7 +1,7 @@
 -- Custom Access Token Hook: called by Supabase Auth at token-issuance time.
 -- Injects tenant_id and role (read from public.profiles) into the JWT's
 -- claims. Every RLS policy in this schema depends on these claims via
--- auth.tenant_id()/auth.is_system_admin()/auth.current_role_claim()
+-- public.tenant_id()/public.is_system_admin()/public.current_role_claim()
 -- (0003_helper_functions.sql) — without this hook registered, those
 -- functions evaluate to null/false and every tenant-scoped policy denies
 -- access (fail closed, not fail open).

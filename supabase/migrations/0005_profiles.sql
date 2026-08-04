@@ -22,8 +22,8 @@ alter table public.profiles enable row level security;
 create policy "profiles_select" on public.profiles
   for select using (
     id = auth.uid()
-    or tenant_id = auth.tenant_id()
-    or auth.is_system_admin()
+    or tenant_id = public.tenant_id()
+    or public.is_system_admin()
   );
 
 -- Provisioning a profile is admin-driven (system_admin platform-wide, or
@@ -31,26 +31,26 @@ create policy "profiles_select" on public.profiles
 -- role in this phase.
 create policy "profiles_insert" on public.profiles
   for insert with check (
-    auth.is_system_admin()
-    or (auth.current_role_claim() = 'tenant_admin' and tenant_id = auth.tenant_id())
+    public.is_system_admin()
+    or (public.current_role_claim() = 'tenant_admin' and tenant_id = public.tenant_id())
   );
 
 create policy "profiles_update" on public.profiles
   for update using (
     id = auth.uid()
-    or tenant_id = auth.tenant_id()
-    or auth.is_system_admin()
+    or tenant_id = public.tenant_id()
+    or public.is_system_admin()
   )
   with check (
     id = auth.uid()
-    or tenant_id = auth.tenant_id()
-    or auth.is_system_admin()
+    or tenant_id = public.tenant_id()
+    or public.is_system_admin()
   );
 
 create policy "profiles_delete" on public.profiles
   for delete using (
-    auth.is_system_admin()
-    or (auth.current_role_claim() = 'tenant_admin' and tenant_id = auth.tenant_id())
+    public.is_system_admin()
+    or (public.current_role_claim() = 'tenant_admin' and tenant_id = public.tenant_id())
   );
 
 -- The "profiles_update" policy above intentionally allows a user to update
@@ -64,7 +64,7 @@ security definer
 set search_path = public
 as $$
 begin
-  if new.id = auth.uid() and not auth.is_system_admin() then
+  if new.id = auth.uid() and not public.is_system_admin() then
     if new.role is distinct from old.role or new.tenant_id is distinct from old.tenant_id then
       raise exception 'Você não pode alterar seu próprio papel ou tenant.';
     end if;

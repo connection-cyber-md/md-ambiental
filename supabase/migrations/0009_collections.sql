@@ -20,9 +20,9 @@ alter table public.collections enable row level security;
 -- in their tenant.
 create policy "collections_select" on public.collections
   for select using (
-    tenant_id = auth.tenant_id() and (
-      auth.is_system_admin()
-      or auth.current_role_claim() in ('tenant_admin', 'tenant_operator', 'tenant_driver')
+    tenant_id = public.tenant_id() and (
+      public.is_system_admin()
+      or public.current_role_claim() in ('tenant_admin', 'tenant_operator', 'tenant_driver')
       or company_id = (select p.company_id from public.profiles p where p.id = auth.uid())
     )
   );
@@ -31,11 +31,11 @@ create policy "collections_select" on public.collections
 -- their own company; internal roles may create for any company in the tenant.
 create policy "collections_insert" on public.collections
   for insert with check (
-    tenant_id = auth.tenant_id() and (
-      auth.is_system_admin()
-      or auth.current_role_claim() in ('tenant_admin', 'tenant_operator')
+    tenant_id = public.tenant_id() and (
+      public.is_system_admin()
+      or public.current_role_claim() in ('tenant_admin', 'tenant_operator')
       or (
-        auth.current_role_claim() = 'client'
+        public.current_role_claim() = 'client'
         and company_id = (select p.company_id from public.profiles p where p.id = auth.uid())
       )
     )
@@ -45,16 +45,16 @@ create policy "collections_insert" on public.collections
 -- to internal roles, not the client who requested the pickup.
 create policy "collections_update" on public.collections
   for update using (
-    tenant_id = auth.tenant_id()
-    and (auth.is_system_admin() or auth.current_role_claim() in ('tenant_admin', 'tenant_operator', 'tenant_driver'))
+    tenant_id = public.tenant_id()
+    and (public.is_system_admin() or public.current_role_claim() in ('tenant_admin', 'tenant_operator', 'tenant_driver'))
   )
   with check (
-    tenant_id = auth.tenant_id()
-    and (auth.is_system_admin() or auth.current_role_claim() in ('tenant_admin', 'tenant_operator', 'tenant_driver'))
+    tenant_id = public.tenant_id()
+    and (public.is_system_admin() or public.current_role_claim() in ('tenant_admin', 'tenant_operator', 'tenant_driver'))
   );
 
 create policy "collections_delete" on public.collections
   for delete using (
-    tenant_id = auth.tenant_id()
-    and (auth.is_system_admin() or auth.current_role_claim() in ('tenant_admin', 'tenant_operator'))
+    tenant_id = public.tenant_id()
+    and (public.is_system_admin() or public.current_role_claim() in ('tenant_admin', 'tenant_operator'))
   );

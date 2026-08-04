@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { LoginForm } from "@/features/auth/components/LoginForm";
+import { LogoMark } from "@/components/ui/LogoMark";
 
 export const metadata: Metadata = {
   title: "Entrar",
@@ -18,7 +18,7 @@ export default async function LoginPage({
     <div className="min-h-screen flex items-center justify-center bg-paper px-6 py-16">
       <div className="w-full max-w-[400px]">
         <Link href="/" className="flex items-center gap-2.5 justify-center mb-10">
-          <Image src="/brand/logo.png" alt="MD Ambiental" width={40} height={40} className="h-9 w-auto" />
+          <LogoMark />
           <span className="font-mono text-[13px] tracking-[0.08em] text-ink uppercase">MD Ambiental</span>
         </Link>
 

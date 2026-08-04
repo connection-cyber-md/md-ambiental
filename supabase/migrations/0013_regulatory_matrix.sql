@@ -23,11 +23,11 @@ alter table public.regulatory_matrix enable row level security;
 -- that apply to their operating regions); writable only by system_admin,
 -- since this is platform-managed reference data, not per-tenant data.
 create policy "regulatory_matrix_select" on public.regulatory_matrix
-  for select using (auth.role() = 'authenticated' or auth.is_system_admin());
+  for select using (auth.role() = 'authenticated' or public.is_system_admin());
 
 create policy "regulatory_matrix_insert" on public.regulatory_matrix
-  for insert with check (auth.is_system_admin());
+  for insert with check (public.is_system_admin());
 create policy "regulatory_matrix_update" on public.regulatory_matrix
-  for update using (auth.is_system_admin()) with check (auth.is_system_admin());
+  for update using (public.is_system_admin()) with check (public.is_system_admin());
 create policy "regulatory_matrix_delete" on public.regulatory_matrix
-  for delete using (auth.is_system_admin());
+  for delete using (public.is_system_admin());
