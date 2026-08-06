@@ -1,0 +1,20 @@
+﻿[02:52:46] ============================================================
+[02:52:46]   MD Ambiental | Backup Manager v1.0 | Ambiente: Staging
+[02:52:46] ============================================================
+[02:52:46] Inicio: 06/08/2026 02:52:46
+[02:52:46] Raiz:   C:\Projetos\md\cyber-mp-staging
+[02:52:46] Log:    C:\Projetos\md\cyber-mp-staging\logs\2026\08\backup\backup_20260806_025246.log
+[02:52:46] 
+[02:52:46] 
+[02:52:46] SYNC [OneDrive] C:\Projetos\md\cyber-mp-staging -> C:\Users\joaqu\OneDrive\Projetos\md-ambiental-staging
+[02:52:46]   [OK] OneDrive sincronizado (robocopy: 1)
+[02:52:46] 
+[02:52:46] SYNC [HD Externo] C:\Projetos\md\cyber-mp-staging -> E:\Projetos\md-ambiental-staging
+[02:52:47]   [OK] HD Externo sincronizado (robocopy: 1)
+[02:52:47] 
+[02:52:47] SNAPSHOT ZIP
+[02:52:53]   [OK] md-ambiental-staging_20260806_025246.zip (0.86 MB)
+[02:52:53] 
+[02:52:53] BANCO DE DADOS ignorado (-PularBanco).
+[02:52:53] GIT COMMIT + PUSH (branch master)
+[02:52:53]   Lembrete: push na master dispara deploy automatico no Vercel.
