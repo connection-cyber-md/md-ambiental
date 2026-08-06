@@ -17,7 +17,7 @@ export default async function AdminImpactPage() {
       <p className="eyebrow">Backoffice</p>
       <h1 className="font-display text-[28px] text-ink mb-2">Impacto socioambiental</h1>
       <p className="text-[14px] text-steel mb-6">
-        Métricas exibidas na home institucional. Só linhas marcadas como "Publicar na home" ficam visíveis para o
+        Métricas exibidas na home institucional. Só linhas marcadas como &quot;Publicar na home&quot; ficam visíveis para o
         público — o restante fica visível apenas aqui, como rascunho.
       </p>
 

@@ -117,7 +117,7 @@ export function RotasBoard({ companies, drivers, pending }: { companies: Company
                         {" · "}
                         {driverProfile ? `motorista: ${driverProfile.full_name}` : "sem motorista atribuído"}
                       </div>
-                      {os.notes && <div className="text-[12px] text-steel mt-1 italic">"{os.notes}"</div>}
+                      {os.notes && <div className="text-[12px] text-steel mt-1 italic">&quot;{os.notes}&quot;</div>}
                     </div>
                     <button
                       onClick={() => handleCancel(os.id)}
