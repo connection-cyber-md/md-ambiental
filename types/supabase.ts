@@ -1,228 +1,965 @@
-/**
- * Hand-written placeholder matching the schema defined in
- * supabase/migrations/. Regenerate this file for real once a project is
- * linked: `npm run supabase:types` (see package.json).
- */
-
-type UserRole = "system_admin" | "tenant_admin" | "tenant_operator" | "tenant_driver" | "client";
+﻿export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.15"
+  }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
-      tenants: {
-        Row: {
-          id: string;
-          cnpj: string;
-          razao_social: string;
-          nome_fantasia: string | null;
-          status: string;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["tenants"]["Row"]> & {
-          cnpj: string;
-          razao_social: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["tenants"]["Row"]>;
-      };
-      profiles: {
-        Row: {
-          id: string;
-          tenant_id: string;
-          role: UserRole;
-          full_name: string;
-          email: string;
-          phone: string | null;
-          company_id: string | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["profiles"]["Row"]> & {
-          id: string;
-          tenant_id: string;
-          role: UserRole;
-          full_name: string;
-          email: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["profiles"]["Row"]>;
-      };
-      companies: {
-        Row: {
-          id: string;
-          tenant_id: string;
-          cnpj: string;
-          razao_social: string;
-          nome_fantasia: string | null;
-          address_logradouro: string | null;
-          address_numero: string | null;
-          address_bairro: string | null;
-          address_cidade: string | null;
-          address_uf: string | null;
-          address_cep: string | null;
-          ibge_code: string | null;
-          license_number: string | null;
-          license_type: string | null;
-          license_issuing_agency: string | null;
-          license_issue_date: string | null;
-          license_expiry_date: string | null;
-          contact_name: string | null;
-          contact_email: string | null;
-          contact_phone: string | null;
-          status: string;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["companies"]["Row"]> & {
-          tenant_id: string;
-          cnpj: string;
-          razao_social: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["companies"]["Row"]>;
-      };
-      vehicles: {
-        Row: {
-          id: string;
-          tenant_id: string;
-          plate: string;
-          model: string | null;
-          brand: string | null;
-          capacity_litros: number | null;
-          status: string;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["vehicles"]["Row"]> & {
-          tenant_id: string;
-          plate: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["vehicles"]["Row"]>;
-      };
-      drivers: {
-        Row: {
-          id: string;
-          tenant_id: string;
-          profile_id: string;
-          cnh_number: string;
-          cnh_category: string | null;
-          cnh_expiry: string | null;
-          vehicle_id: string | null;
-          status: string;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["drivers"]["Row"]> & {
-          tenant_id: string;
-          profile_id: string;
-          cnh_number: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["drivers"]["Row"]>;
-      };
-      collections: {
-        Row: {
-          id: string;
-          tenant_id: string;
-          company_id: string;
-          driver_id: string | null;
-          vehicle_id: string | null;
-          collection_date: string;
-          volume_litros: number | null;
-          status: string;
-          notes: string | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["collections"]["Row"]> & {
-          tenant_id: string;
-          company_id: string;
-          collection_date: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["collections"]["Row"]>;
-      };
-      documents: {
-        Row: {
-          id: string;
-          tenant_id: string;
-          collection_id: string;
-          type: "CCO" | "MTR";
-          document_number: string | null;
-          file_url: string | null;
-          issue_date: string | null;
-          status: string;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["documents"]["Row"]> & {
-          tenant_id: string;
-          collection_id: string;
-          type: "CCO" | "MTR";
-        };
-        Update: Partial<Database["public"]["Tables"]["documents"]["Row"]>;
-      };
       bpo_tasks: {
         Row: {
-          id: string;
-          tenant_id: string;
-          department: string;
-          title: string;
-          description: string | null;
-          status: string;
-          due_date: string | null;
-          assigned_to: string | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["bpo_tasks"]["Row"]> & {
-          tenant_id: string;
-          department: string;
-          title: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["bpo_tasks"]["Row"]>;
-      };
+          assigned_to: string | null
+          created_at: string
+          department: Database["public"]["Enums"]["bpo_department"]
+          description: string | null
+          due_date: string | null
+          id: string
+          status: Database["public"]["Enums"]["bpo_status"]
+          tenant_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          created_at?: string
+          department: Database["public"]["Enums"]["bpo_department"]
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["bpo_status"]
+          tenant_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          created_at?: string
+          department?: Database["public"]["Enums"]["bpo_department"]
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["bpo_status"]
+          tenant_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bpo_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bpo_tasks_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collections: {
+        Row: {
+          collection_date: string
+          company_id: string
+          created_at: string
+          driver_id: string | null
+          estimated_distance_km: number | null
+          id: string
+          notes: string | null
+          route_order: number | null
+          status: Database["public"]["Enums"]["collection_status"]
+          tenant_id: string
+          updated_at: string
+          vehicle_id: string | null
+          volume_litros: number | null
+        }
+        Insert: {
+          collection_date: string
+          company_id: string
+          created_at?: string
+          driver_id?: string | null
+          estimated_distance_km?: number | null
+          id?: string
+          notes?: string | null
+          route_order?: number | null
+          status?: Database["public"]["Enums"]["collection_status"]
+          tenant_id: string
+          updated_at?: string
+          vehicle_id?: string | null
+          volume_litros?: number | null
+        }
+        Update: {
+          collection_date?: string
+          company_id?: string
+          created_at?: string
+          driver_id?: string | null
+          estimated_distance_km?: number | null
+          id?: string
+          notes?: string | null
+          route_order?: number | null
+          status?: Database["public"]["Enums"]["collection_status"]
+          tenant_id?: string
+          updated_at?: string
+          vehicle_id?: string | null
+          volume_litros?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collections_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collections_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "drivers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collections_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collections_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      companies: {
+        Row: {
+          address_bairro: string | null
+          address_cep: string | null
+          address_cidade: string | null
+          address_logradouro: string | null
+          address_numero: string | null
+          address_uf: string | null
+          cnpj: string
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string
+          ibge_code: string | null
+          id: string
+          license_expiry_date: string | null
+          license_issue_date: string | null
+          license_issuing_agency: string | null
+          license_number: string | null
+          license_type: string | null
+          nome_fantasia: string | null
+          razao_social: string
+          status: string
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          address_bairro?: string | null
+          address_cep?: string | null
+          address_cidade?: string | null
+          address_logradouro?: string | null
+          address_numero?: string | null
+          address_uf?: string | null
+          cnpj: string
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          ibge_code?: string | null
+          id?: string
+          license_expiry_date?: string | null
+          license_issue_date?: string | null
+          license_issuing_agency?: string | null
+          license_number?: string | null
+          license_type?: string | null
+          nome_fantasia?: string | null
+          razao_social: string
+          status?: string
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          address_bairro?: string | null
+          address_cep?: string | null
+          address_cidade?: string | null
+          address_logradouro?: string | null
+          address_numero?: string | null
+          address_uf?: string | null
+          cnpj?: string
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          ibge_code?: string | null
+          id?: string
+          license_expiry_date?: string | null
+          license_issue_date?: string | null
+          license_issuing_agency?: string | null
+          license_number?: string | null
+          license_type?: string | null
+          nome_fantasia?: string | null
+          razao_social?: string
+          status?: string
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "companies_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dashboards_metrics: {
         Row: {
-          id: string;
-          tenant_id: string;
-          metric_key: string;
-          metric_value: number;
-          scope: string;
-          period_start: string;
-          period_end: string;
-          metadata: Record<string, unknown> | null;
-          created_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["dashboards_metrics"]["Row"]> & {
-          tenant_id: string;
-          metric_key: string;
-          metric_value: number;
-          scope: string;
-          period_start: string;
-          period_end: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["dashboards_metrics"]["Row"]>;
-      };
+          created_at: string
+          id: string
+          metadata: Json | null
+          metric_key: string
+          metric_value: number
+          period_end: string
+          period_start: string
+          scope: string
+          tenant_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          metric_key: string
+          metric_value: number
+          period_end: string
+          period_start: string
+          scope: string
+          tenant_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          metric_key?: string
+          metric_value?: number
+          period_end?: string
+          period_start?: string
+          scope?: string
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dashboards_metrics_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents: {
+        Row: {
+          collection_id: string
+          created_at: string
+          document_number: string | null
+          file_url: string | null
+          id: string
+          issue_date: string | null
+          status: Database["public"]["Enums"]["document_status"]
+          tenant_id: string
+          type: Database["public"]["Enums"]["document_type"]
+          updated_at: string
+        }
+        Insert: {
+          collection_id: string
+          created_at?: string
+          document_number?: string | null
+          file_url?: string | null
+          id?: string
+          issue_date?: string | null
+          status?: Database["public"]["Enums"]["document_status"]
+          tenant_id: string
+          type: Database["public"]["Enums"]["document_type"]
+          updated_at?: string
+        }
+        Update: {
+          collection_id?: string
+          created_at?: string
+          document_number?: string | null
+          file_url?: string | null
+          id?: string
+          issue_date?: string | null
+          status?: Database["public"]["Enums"]["document_status"]
+          tenant_id?: string
+          type?: Database["public"]["Enums"]["document_type"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      drivers: {
+        Row: {
+          cnh_category: string | null
+          cnh_expiry: string | null
+          cnh_number: string
+          created_at: string
+          id: string
+          mopp_expiry: string | null
+          profile_id: string
+          status: Database["public"]["Enums"]["driver_status"]
+          tenant_id: string
+          updated_at: string
+          vehicle_id: string | null
+        }
+        Insert: {
+          cnh_category?: string | null
+          cnh_expiry?: string | null
+          cnh_number: string
+          created_at?: string
+          id?: string
+          mopp_expiry?: string | null
+          profile_id: string
+          status?: Database["public"]["Enums"]["driver_status"]
+          tenant_id: string
+          updated_at?: string
+          vehicle_id?: string | null
+        }
+        Update: {
+          cnh_category?: string | null
+          cnh_expiry?: string | null
+          cnh_number?: string
+          created_at?: string
+          id?: string
+          mopp_expiry?: string | null
+          profile_id?: string
+          status?: Database["public"]["Enums"]["driver_status"]
+          tenant_id?: string
+          updated_at?: string
+          vehicle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drivers_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drivers_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drivers_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      impact_metrics: {
+        Row: {
+          computation_mode: string
+          created_at: string
+          display_order: number
+          id: string
+          is_published: boolean
+          label: string
+          metric_key: string
+          period_label: string | null
+          source: string | null
+          tenant_id: string
+          unit: string | null
+          updated_at: string
+          value: number
+        }
+        Insert: {
+          computation_mode?: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          is_published?: boolean
+          label: string
+          metric_key: string
+          period_label?: string | null
+          source?: string | null
+          tenant_id: string
+          unit?: string | null
+          updated_at?: string
+          value?: number
+        }
+        Update: {
+          computation_mode?: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          is_published?: boolean
+          label?: string
+          metric_key?: string
+          period_label?: string | null
+          source?: string | null
+          tenant_id?: string
+          unit?: string | null
+          updated_at?: string
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "impact_metrics_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone: string | null
+          role: Database["public"]["Enums"]["user_role"]
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id: string
+          phone?: string | null
+          role: Database["public"]["Enums"]["user_role"]
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       regulatory_matrix: {
         Row: {
-          id: string;
-          ibge_code: string;
-          uf: string;
-          sphere: "federal" | "estadual" | "municipal";
-          rule_title: string;
-          rule_description: string | null;
-          required_documents: string[] | null;
-          blocking_condition: string | null;
-          reference_law: string | null;
-          effective_date: string | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Partial<Database["public"]["Tables"]["regulatory_matrix"]["Row"]> & {
-          ibge_code: string;
-          uf: string;
-          sphere: "federal" | "estadual" | "municipal";
-          rule_title: string;
-        };
-        Update: Partial<Database["public"]["Tables"]["regulatory_matrix"]["Row"]>;
-      };
-    };
-  };
-};
+          blocking_condition: string | null
+          created_at: string
+          effective_date: string | null
+          ibge_code: string | null
+          id: string
+          reference_law: string | null
+          required_documents: string[] | null
+          rule_description: string | null
+          rule_title: string
+          sphere: Database["public"]["Enums"]["regulatory_sphere"]
+          uf: string | null
+          updated_at: string
+        }
+        Insert: {
+          blocking_condition?: string | null
+          created_at?: string
+          effective_date?: string | null
+          ibge_code?: string | null
+          id?: string
+          reference_law?: string | null
+          required_documents?: string[] | null
+          rule_description?: string | null
+          rule_title: string
+          sphere: Database["public"]["Enums"]["regulatory_sphere"]
+          uf?: string | null
+          updated_at?: string
+        }
+        Update: {
+          blocking_condition?: string | null
+          created_at?: string
+          effective_date?: string | null
+          ibge_code?: string | null
+          id?: string
+          reference_law?: string | null
+          required_documents?: string[] | null
+          rule_description?: string | null
+          rule_title?: string
+          sphere?: Database["public"]["Enums"]["regulatory_sphere"]
+          uf?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      tenants: {
+        Row: {
+          address_cidade: string | null
+          address_logradouro: string | null
+          address_uf: string | null
+          anp_authorization_number: string | null
+          cnpj: string
+          created_at: string
+          id: string
+          nome_fantasia: string | null
+          razao_social: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          address_cidade?: string | null
+          address_logradouro?: string | null
+          address_uf?: string | null
+          anp_authorization_number?: string | null
+          cnpj: string
+          created_at?: string
+          id?: string
+          nome_fantasia?: string | null
+          razao_social: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          address_cidade?: string | null
+          address_logradouro?: string | null
+          address_uf?: string | null
+          anp_authorization_number?: string | null
+          cnpj?: string
+          created_at?: string
+          id?: string
+          nome_fantasia?: string | null
+          razao_social?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      vehicle_maintenance: {
+        Row: {
+          cost: number
+          created_at: string
+          description: string | null
+          id: string
+          maintenance_date: string
+          maintenance_type: Database["public"]["Enums"]["maintenance_type"]
+          tenant_id: string
+          updated_at: string
+          vehicle_id: string
+        }
+        Insert: {
+          cost: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          maintenance_date: string
+          maintenance_type: Database["public"]["Enums"]["maintenance_type"]
+          tenant_id: string
+          updated_at?: string
+          vehicle_id: string
+        }
+        Update: {
+          cost?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          maintenance_date?: string
+          maintenance_type?: Database["public"]["Enums"]["maintenance_type"]
+          tenant_id?: string
+          updated_at?: string
+          vehicle_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_maintenance_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vehicle_maintenance_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vehicle_shifts: {
+        Row: {
+          created_at: string
+          driver_id: string
+          end_km: number | null
+          end_time: string | null
+          fuel_added_liters: number | null
+          id: string
+          start_km: number
+          start_time: string
+          tenant_id: string
+          updated_at: string
+          vehicle_id: string
+        }
+        Insert: {
+          created_at?: string
+          driver_id: string
+          end_km?: number | null
+          end_time?: string | null
+          fuel_added_liters?: number | null
+          id?: string
+          start_km: number
+          start_time?: string
+          tenant_id: string
+          updated_at?: string
+          vehicle_id: string
+        }
+        Update: {
+          created_at?: string
+          driver_id?: string
+          end_km?: number | null
+          end_time?: string | null
+          fuel_added_liters?: number | null
+          id?: string
+          start_km?: number
+          start_time?: string
+          tenant_id?: string
+          updated_at?: string
+          vehicle_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_shifts_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "drivers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vehicle_shifts_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vehicle_shifts_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vehicles: {
+        Row: {
+          brand: string | null
+          capacity_litros: number | null
+          created_at: string
+          id: string
+          insurance_expiry_date: string | null
+          license_expiry_date: string | null
+          model: string | null
+          plate: string
+          status: Database["public"]["Enums"]["vehicle_status"]
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          brand?: string | null
+          capacity_litros?: number | null
+          created_at?: string
+          id?: string
+          insurance_expiry_date?: string | null
+          license_expiry_date?: string | null
+          model?: string | null
+          plate: string
+          status?: Database["public"]["Enums"]["vehicle_status"]
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          brand?: string | null
+          capacity_litros?: number | null
+          created_at?: string
+          id?: string
+          insurance_expiry_date?: string | null
+          license_expiry_date?: string | null
+          model?: string | null
+          plate?: string
+          status?: Database["public"]["Enums"]["vehicle_status"]
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicles_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      current_role_claim: { Args: never; Returns: string }
+      custom_access_token_hook: { Args: { event: Json }; Returns: Json }
+      is_system_admin: { Args: never; Returns: boolean }
+      tenant_id: { Args: never; Returns: string }
+    }
+    Enums: {
+      bpo_department:
+        | "comercial"
+        | "operacional"
+        | "administrativo"
+        | "financeiro"
+        | "rh"
+      bpo_status: "pending" | "in_progress" | "done" | "blocked"
+      collection_status: "scheduled" | "in_progress" | "completed" | "canceled"
+      document_status: "draft" | "issued" | "canceled"
+      document_type: "CCO" | "MTR"
+      driver_status: "active" | "inactive"
+      maintenance_type: "oleo" | "pneu" | "lavagem" | "mecanica" | "documento"
+      regulatory_sphere: "federal" | "estadual" | "municipal"
+      user_role:
+        | "system_admin"
+        | "tenant_admin"
+        | "tenant_operator"
+        | "tenant_driver"
+        | "client"
+      vehicle_status: "active" | "maintenance" | "inactive"
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
+  public: {
+    Enums: {
+      bpo_department: [
+        "comercial",
+        "operacional",
+        "administrativo",
+        "financeiro",
+        "rh",
+      ],
+      bpo_status: ["pending", "in_progress", "done", "blocked"],
+      collection_status: ["scheduled", "in_progress", "completed", "canceled"],
+      document_status: ["draft", "issued", "canceled"],
+      document_type: ["CCO", "MTR"],
+      driver_status: ["active", "inactive"],
+      maintenance_type: ["oleo", "pneu", "lavagem", "mecanica", "documento"],
+      regulatory_sphere: ["federal", "estadual", "municipal"],
+      user_role: [
+        "system_admin",
+        "tenant_admin",
+        "tenant_operator",
+        "tenant_driver",
+        "client",
+      ],
+      vehicle_status: ["active", "maintenance", "inactive"],
+    },
+  },
+} as const

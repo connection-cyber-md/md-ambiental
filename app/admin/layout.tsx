@@ -16,6 +16,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           { href: "/admin/bpo", label: "BPO" },
           { href: "/admin/compliance", label: "Conformidade" },
           { href: "/admin/dashboards", label: "Dashboards" },
+          { href: "/admin/impacto", label: "Impacto" },
+          { href: "/admin/documentos", label: "Documentos" },
         ]}
       />
       <main className="max-w-[1180px] mx-auto px-6 py-10">{children}</main>

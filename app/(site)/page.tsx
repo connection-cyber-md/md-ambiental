@@ -1,5 +1,6 @@
 import { HeroSection } from "@/features/institutional/components/HeroSection";
 import { CompromissoAmbientalSection } from "@/features/institutional/components/CompromissoAmbientalSection";
+import { ImpactCountersSection } from "@/features/institutional/components/ImpactCountersSection";
 import { ServicosSection } from "@/features/institutional/components/ServicosSection";
 import { ComoFuncionaSection } from "@/features/institutional/components/ComoFuncionaSection";
 import { TransparenciaLicensesSection } from "@/features/institutional/components/TransparenciaLicensesSection";
@@ -15,16 +16,18 @@ export default function HomePage() {
       <SectionDivider index={0} />
       <CompromissoAmbientalSection />
       <SectionDivider index={1} />
-      <ServicosSection />
+      <ImpactCountersSection />
       <SectionDivider index={2} />
-      <ComoFuncionaSection />
+      <ServicosSection />
       <SectionDivider index={3} />
-      <TransparenciaLicensesSection />
+      <ComoFuncionaSection />
       <SectionDivider index={4} />
-      <ReviewsSection />
+      <TransparenciaLicensesSection />
       <SectionDivider index={5} />
-      <PortalClienteCTA />
+      <ReviewsSection />
       <SectionDivider index={6} />
+      <PortalClienteCTA />
+      <SectionDivider index={7} />
       <ContactSection />
     </>
   );

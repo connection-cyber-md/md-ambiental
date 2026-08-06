@@ -5,12 +5,28 @@ import { createClient } from "@/lib/supabase/server";
 
 type ActionResult = { success: true } | { error: string };
 
+const BPO_DEPARTMENTS = ["comercial", "operacional", "administrativo", "financeiro", "rh"] as const;
+type BpoDepartment = (typeof BPO_DEPARTMENTS)[number];
+
+const BPO_STATUSES = ["pending", "in_progress", "done", "blocked"] as const;
+type BpoStatus = (typeof BPO_STATUSES)[number];
+
+function readDepartment(formData: FormData): BpoDepartment | null {
+  const v = String(formData.get("department") ?? "").trim();
+  return (BPO_DEPARTMENTS as readonly string[]).includes(v) ? (v as BpoDepartment) : null;
+}
+
+function readBpoStatus(formData: FormData): BpoStatus {
+  const v = String(formData.get("status") ?? "pending").trim();
+  return (BPO_STATUSES as readonly string[]).includes(v) ? (v as BpoStatus) : "pending";
+}
+
 function readInput(formData: FormData) {
   return {
-    department: String(formData.get("department") ?? ""),
+    department: readDepartment(formData),
     title: String(formData.get("title") ?? "").trim(),
     description: String(formData.get("description") ?? "").trim(),
-    status: String(formData.get("status") ?? "pending"),
+    status: readBpoStatus(formData),
     due_date: String(formData.get("due_date") ?? ""),
     assigned_to: String(formData.get("assigned_to") ?? ""),
   };
