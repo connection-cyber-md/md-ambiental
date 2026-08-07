@@ -10,6 +10,16 @@ const titleWords = heroContent.title.split(" ");
 const titleFirstLine = titleWords.slice(0, -2).join(" ");
 const titleSecondLine = titleWords.slice(-2).join(" ");
 
+// Antes era um card flutuante ("Ficha de coleta") sobre a foto do hero;
+// virou uma segunda barra, no mesmo formato da trustBar, logo abaixo dela.
+const collectionSheet = [
+  { value: "Resíduo classe I", caption: "Classe" },
+  { value: "OLUC", caption: "Material" },
+  { value: "Piracicaba/SP", caption: "Base" },
+  { value: "ANP vigente", caption: "Autorização" },
+  { value: "Rerrefino", caption: "Destinação" },
+];
+
 export function HeroSection() {
   return (
     <div id="top">
@@ -58,23 +68,42 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="bg-ink border-t border-brand-amber/25">
-        <div className="max-w-[1180px] mx-auto px-6 flex flex-wrap">
-          {trustBar.map((item, i) => (
-            <div
-              key={item.label}
-              className={`flex-1 min-w-[220px] py-5 px-6 flex items-center gap-3 ${
-                i < trustBar.length - 1 ? "border-r border-brand-amber/25" : ""
-              }`}
-            >
-              <div>
-                <strong className="font-display text-white text-[17px] block">{item.label}</strong>
-                <span className="font-mono text-[11.5px] text-steel-light uppercase tracking-[0.06em]">
+      <div className="border-t border-brand-amber/25">
+        <div className="bg-ink">
+          <div className="max-w-[1180px] mx-auto px-6 flex flex-wrap">
+            {trustBar.map((item, i) => (
+              <div
+                key={item.label}
+                className={`flex-1 min-w-[220px] py-5 px-6 flex items-center gap-3 ${
+                  i < trustBar.length - 1 ? "border-r border-brand-amber/25" : ""
+                }`}
+              >
+                <div>
+                  <strong className="font-display text-white text-[17px] block">{item.label}</strong>
+                  <span className="font-mono text-[11.5px] text-steel-light uppercase tracking-[0.06em]">
+                    {item.caption}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="bg-black border-t border-brand-amber/25">
+          <div className="max-w-[1180px] mx-auto px-6 flex flex-wrap">
+            {collectionSheet.map((item, i) => (
+              <div
+                key={item.caption}
+                className={`flex-1 min-w-[140px] py-3.5 px-6 ${
+                  i < collectionSheet.length - 1 ? "border-r border-brand-amber/25" : ""
+                }`}
+              >
+                <strong className="font-display text-white text-[13px] block">{item.value}</strong>
+                <span className="font-mono text-[9.5px] text-steel-light uppercase tracking-[0.06em]">
                   {item.caption}
                 </span>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

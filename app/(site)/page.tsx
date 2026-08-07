@@ -1,14 +1,14 @@
 import { HeroSection } from "@/features/institutional/components/HeroSection";
 import { CompromissoAmbientalSection } from "@/features/institutional/components/CompromissoAmbientalSection";
-import { ImpactCountersSection } from "@/features/institutional/components/ImpactCountersSection";
-import { ServicosSection } from "@/features/institutional/components/ServicosSection";
+import { SocialProofServicosSection } from "@/features/institutional/components/SocialProofServicosSection";
 import { ComoFuncionaSection } from "@/features/institutional/components/ComoFuncionaSection";
-import { TransparenciaLicensesSection } from "@/features/institutional/components/TransparenciaLicensesSection";
-import { ReviewsSection } from "@/features/institutional/components/ReviewsSection";
-import { PortalClienteCTA } from "@/features/institutional/components/PortalClienteCTA";
-import { ContactSection } from "@/features/institutional/components/ContactSection";
+import { ImpactTransparencySection } from "@/features/institutional/components/ImpactTransparencySection";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 
+// SocialProofServicosSection une Prova Social + Nossos Serviços e ocupa a
+// posição que a antiga ServicosSection (full-width) tinha na página.
+// ImpactTransparencySection une Impacto socioambiental + Transparência, com
+// Área do cliente empilhada abaixo de Impacto. Por pedido explícito.
 export default function HomePage() {
   return (
     <>
@@ -16,19 +16,11 @@ export default function HomePage() {
       <SectionDivider index={0} />
       <CompromissoAmbientalSection />
       <SectionDivider index={1} />
-      <ImpactCountersSection />
+      <SocialProofServicosSection />
       <SectionDivider index={2} />
-      <ServicosSection />
-      <SectionDivider index={3} />
       <ComoFuncionaSection />
-      <SectionDivider index={4} />
-      <TransparenciaLicensesSection />
-      <SectionDivider index={5} />
-      <ReviewsSection />
-      <SectionDivider index={6} />
-      <PortalClienteCTA />
-      <SectionDivider index={7} />
-      <ContactSection />
+      <SectionDivider index={3} />
+      <ImpactTransparencySection />
     </>
   );
 }
