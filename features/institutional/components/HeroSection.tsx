@@ -71,8 +71,8 @@ export function HeroSection() {
       <div className="border-t border-brand-amber/25 bg-black">
         <div className="max-w-[1440px] mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           
-          {/* 1ª Coluna: Credibilidade (Cards 2 por linha com padrão de cores temático) */}
-          <div className="flex flex-col gap-4 bg-ink p-5 border border-brand-amber/25 h-full">
+          {/* 1ª Coluna: Credibilidade (Fundo transparente) */}
+          <div className="flex flex-col gap-4 p-5 border border-brand-amber/25 h-full">
             <span className="font-mono text-[10px] text-brand-amber uppercase tracking-[0.1em]">01 / Credibilidade</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {trustBar.map((item, index) => {
@@ -89,8 +89,8 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* 2ª Coluna: Ficha Técnica (Cards 2 por linha com padrão de cores temático) */}
-          <div className="flex flex-col gap-4 bg-ink p-5 border border-brand-amber/25 h-full">
+          {/* 2ª Coluna: Ficha Técnica (Fundo transparente) */}
+          <div className="flex flex-col gap-4 p-5 border border-brand-amber/25 h-full">
             <span className="font-mono text-[10px] text-brand-amber uppercase tracking-[0.1em]">02 / Ficha Técnica</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {collectionSheet.map((item, index) => {
@@ -107,8 +107,8 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* 3ª Coluna: Métricas de Impacto (Cards quadrados simétricos 2x2 mantidos) */}
-          <div className="flex flex-col gap-4 bg-ink p-5 border border-brand-amber/25 h-full">
+          {/* 3ª Coluna: Métricas de Impacto (Fundo transparente) */}
+          <div className="flex flex-col gap-4 p-5 border border-brand-amber/25 h-full">
             <span className="font-mono text-[10px] text-brand-amber uppercase tracking-[0.1em]">03 / Métricas de Impacto</span>
             <div className="w-full">
               <EnvironmentalImpact />
