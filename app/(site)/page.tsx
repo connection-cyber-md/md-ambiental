@@ -4,6 +4,7 @@ import { SocialProofServicosSection } from "@/features/institutional/components/
 import { ComoFuncionaSection } from "@/features/institutional/components/ComoFuncionaSection";
 import { ImpactTransparencySection } from "@/features/institutional/components/ImpactTransparencySection";
 import { SectionDivider } from "@/components/ui/SectionDivider";
+import { EnvironmentalImpact } from "@/components/sections/EnvironmentalImpact";
 
 // SocialProofServicosSection une Prova Social + Nossos Serviços e ocupa a
 // posição que a antiga ServicosSection (full-width) tinha na página.
@@ -16,10 +17,13 @@ export default function HomePage() {
       <SectionDivider index={0} />
       <CompromissoAmbientalSection />
       <SectionDivider index={1} />
-      <SocialProofServicosSection />
+      {/* Injeção Controlada da Tradução de Impacto Ambiental */}
+      <EnvironmentalImpact />
       <SectionDivider index={2} />
-      <ComoFuncionaSection />
+      <SocialProofServicosSection />
       <SectionDivider index={3} />
+      <ComoFuncionaSection />
+      <SectionDivider index={4} />
       <ImpactTransparencySection />
     </>
   );
