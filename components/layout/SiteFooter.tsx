@@ -22,7 +22,7 @@ export function SiteFooter() {
     <>
       <SectionDivider index={0} />
       <footer className="bg-ink text-steel-light pt-16">
-        <div className="max-w-[1180px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.7fr_1fr_1fr_1.3fr] gap-11 pb-13 border-b border-white/10">
+        <div className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.7fr_1fr_1fr_1.3fr] gap-11 pb-13 border-b border-white/10">
           <div className="md:col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-4 mb-6">
               <LogoMark size={60} />
@@ -93,7 +93,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="max-w-[1180px] mx-auto px-6 flex justify-between flex-wrap gap-3 text-[11.5px] font-mono py-6">
+        <div className="max-w-[1440px] mx-auto px-6 flex justify-between flex-wrap gap-3 text-[11.5px] font-mono py-6">
           <span>
             © {new Date().getFullYear()} {siteConfig.companyName} · CNPJ {siteConfig.cnpj} · Todos os direitos reservados
           </span>

@@ -42,7 +42,7 @@ export async function ImpactTransparencySection() {
 
   return (
     <section className="py-[50px] md:py-[70px] bg-brand-green-deep" id="impacto">
-      <div className="max-w-[1180px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-14">
+      <div className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-14">
         <div>
           <p className="eyebrow">Impacto socioambiental</p>
           <h2 className="font-display font-semibold text-[clamp(24px,2.6vw,32px)] leading-tight text-paper mb-8">

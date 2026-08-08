@@ -30,7 +30,7 @@ export async function ImpactCountersSection() {
 
   return (
     <section className="py-[50px] md:py-[70px] bg-ink" id="impacto">
-      <div className="max-w-[1180px] mx-auto px-6">
+      <div className="max-w-[1440px] mx-auto px-6">
         <p className="eyebrow text-brand-amber">Impacto socioambiental</p>
         <h2 className="font-display font-semibold text-[clamp(26px,3.2vw,38px)] leading-tight text-paper mb-9 max-w-[680px]">
           Nossa operação em números

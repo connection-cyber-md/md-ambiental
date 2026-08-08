@@ -9,10 +9,10 @@ const eyebrowBrand = eyebrowWords.slice(-2).join(" ");
 
 export function CompromissoAmbientalSection() {
   return (
-    <section className="py-[50px] md:py-[70px] bg-white" id="sobre">
-      <div className="max-w-[1180px] mx-auto px-6 grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-11 md:gap-16 items-center">
+    <section className="py-[30px] md:py-[45px] bg-white" id="sobre">
+      <div className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-11 md:gap-16 items-center">
         <div>
-          <p className="eyebrow text-[27.6px]">
+          <p className="eyebrow text-[51px]">
             {eyebrowRest} <strong className="font-bold">{eyebrowBrand}</strong>
           </p>
           <p className="font-display font-medium text-black text-[19px] leading-snug mb-7">

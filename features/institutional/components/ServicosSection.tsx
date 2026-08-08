@@ -5,7 +5,7 @@ import { services } from "@/features/institutional/content/site-copy";
 export function ServicosSection() {
   return (
     <section className="py-20 md:py-28 bg-brand-green-soft" id="servicos">
-      <div className="max-w-[1180px] mx-auto px-6">
+      <div className="max-w-[1440px] mx-auto px-6">
         <div className="max-w-[640px] mb-14">
           <p className="eyebrow">Nossos serviços</p>
           <h2 className="font-display font-semibold text-[clamp(28px,3.6vw,44px)] leading-tight text-ink">

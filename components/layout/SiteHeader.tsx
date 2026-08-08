@@ -22,7 +22,7 @@ const NAV_LINKS = [
 export function SiteHeader() {
   return (
     <header className="sticky top-0 left-0 right-0 z-50 bg-black py-4 border-b border-white/10">
-      <div className="max-w-[1180px] mx-auto px-6 flex items-center justify-between gap-6">
+      <div className="max-w-[1440px] mx-auto px-6 flex items-center justify-between gap-6">
         <Link href="/" className="flex items-center gap-2.5">
           <LogoMark size={49.3} />
           <span className="font-mono text-[15.7px] tracking-[0.08em] text-white uppercase">

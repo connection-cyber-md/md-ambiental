@@ -8,7 +8,7 @@ import { reviewsContent, portalCta } from "@/features/institutional/content/site
 export function SocialProofPortalSection() {
   return (
     <section className="py-[50px] md:py-[70px] bg-paper" id="avaliacoes">
-      <div className="max-w-[1180px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-14">
+      <div className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-14">
         <div>
           <p className="eyebrow">{reviewsContent.eyebrow}</p>
           <h2 className="font-display font-semibold text-[clamp(24px,2.6vw,32px)] leading-tight text-ink mb-5">

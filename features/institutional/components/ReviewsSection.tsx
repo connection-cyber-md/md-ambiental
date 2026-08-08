@@ -4,7 +4,7 @@ import { reviewsContent } from "@/features/institutional/content/site-copy";
 export function ReviewsSection() {
   return (
     <section className="py-[50px] md:py-[70px] bg-paper" id="avaliacoes">
-      <div className="max-w-[1180px] mx-auto px-6">
+      <div className="max-w-[1440px] mx-auto px-6">
         <div className="flex justify-between items-end gap-8 flex-wrap mb-14">
           <div>
             <p className="eyebrow">{reviewsContent.eyebrow}</p>

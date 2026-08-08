@@ -93,7 +93,7 @@ export function ComoFuncionaSection() {
 
   return (
     <section className="py-20 md:py-28 bg-ink text-paper" id="processo">
-      <div className="max-w-[1180px] mx-auto px-6">
+      <div className="max-w-[1440px] mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[0.9fr_2fr] gap-16 items-start">
           <div>
             <div className="max-w-[520px] mb-8">

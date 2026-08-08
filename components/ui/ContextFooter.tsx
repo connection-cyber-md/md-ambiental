@@ -6,7 +6,7 @@
 export function ContextFooter({ children }: { children: React.ReactNode }) {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 bg-ink">
-      <div className="max-w-[1180px] mx-auto px-6 py-2.5 flex items-center justify-between gap-4 flex-wrap text-[12.5px] text-white">
+      <div className="max-w-[1440px] mx-auto px-6 py-2.5 flex items-center justify-between gap-4 flex-wrap text-[12.5px] text-white">
         {children}
       </div>
     </div>
