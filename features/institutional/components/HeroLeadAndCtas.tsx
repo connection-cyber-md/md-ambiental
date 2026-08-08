@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { buildWhatsAppLink } from "@/config/site";
+import HeroAnimatedItem from "./HeroAnimatedItem"; // Apenas o Item é importado
 
 // Mede a largura real da fileira de botões (w-fit, então encolhe pro
 // conteúdo) e aplica essa medida como largura máxima do parágrafo acima,
@@ -27,29 +28,34 @@ export function HeroLeadAndCtas({ lead }: { lead: string }) {
   }, []);
 
   return (
-    <>
-      <p
-        className="text-[#dfe4da] text-justify text-[clamp(18.7px,1.6vw,21.7px)] mb-9"
-        style={{ maxWidth: maxWidth ? `${maxWidth}px` : "600px" }}
-      >
-        {lead}
-      </p>
-      <div ref={ctasRef} className="w-fit flex gap-4 flex-wrap">
-        <Button
-          variant="whatsapp"
-          href={buildWhatsAppLink(
-            "Olá! Quero agendar uma coleta de óleo lubrificante com a MD Ambiental."
-          )}
-          target="_blank"
-          rel="noopener"
+    <> {/* Fragmento limpo no lugar do Container */}
+      <HeroAnimatedItem>
+        <p
+          className="text-[#dfe4da] text-justify text-[clamp(18.7px,1.6vw,21.7px)] mb-9"
+          style={{ maxWidth: maxWidth ? `${maxWidth}px` : "600px" }}
         >
-          <WhatsAppIcon className="w-[18px] h-[18px]" />
-          Agendar consulta
-        </Button>
-        <Button variant="ghost-dark" href="#processo">
-          Ver nosso processo
-        </Button>
-      </div>
+          {lead}
+        </p>
+      </HeroAnimatedItem>
+      
+      <HeroAnimatedItem>
+        <div ref={ctasRef} className="w-fit flex gap-4 flex-wrap">
+          <Button
+            variant="whatsapp"
+            href={buildWhatsAppLink(
+              "Olá! Quero agendar uma coleta de óleo lubrificante com a MD Ambiental."
+            )}
+            target="_blank"
+            rel="noopener"
+          >
+            <WhatsAppIcon className="w-[18px] h-[18px]" />
+            Agendar consulta
+          </Button>
+          <Button variant="ghost-dark" href="#processo">
+            Ver nosso processo
+          </Button>
+        </div>
+      </HeroAnimatedItem>
     </>
   );
 }

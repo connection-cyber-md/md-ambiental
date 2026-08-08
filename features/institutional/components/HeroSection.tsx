@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { HeroLeadAndCtas } from "@/features/institutional/components/HeroLeadAndCtas";
 import { heroContent, trustBar } from "@/features/institutional/content/site-copy";
+import HeroAnimatedContainer from "./HeroAnimatedContainer";
+import HeroAnimatedItem from "./HeroAnimatedItem";
 
 // Título em duas linhas fixas: tudo menos as duas últimas palavras na
 // primeira linha, as duas últimas na segunda ("...óleo" / "lubrificante usado.").
@@ -36,15 +38,19 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-[rgba(10,14,9,0.55)] via-[rgba(10,14,9,0.55)] to-[rgba(10,14,9,0.92)] -z-10" />
 
         <div className="max-w-[1180px] mx-auto px-6 w-full">
-          <div className="max-w-[760px] pt-10">
-            <p className="eyebrow text-[18.5px]">{heroContent.eyebrow}</p>
-            <h1 className="font-display font-semibold text-white text-left text-[clamp(14.5px,3vw,29.5px)] leading-[0.98] tracking-tight mb-6">
-              {titleFirstLine}
-              <br />
-              {titleSecondLine}
-            </h1>
+          <HeroAnimatedContainer className="max-w-[760px] pt-10">
+            <HeroAnimatedItem>
+              <p className="eyebrow text-[18.5px]">{heroContent.eyebrow}</p>
+            </HeroAnimatedItem>
+            <HeroAnimatedItem>
+              <h1 className="font-display font-semibold text-white text-left text-[clamp(14.5px,3vw,29.5px)] leading-[0.98] tracking-tight mb-6">
+                {titleFirstLine}
+                <br />
+                {titleSecondLine}
+              </h1>
+            </HeroAnimatedItem>
             <HeroLeadAndCtas lead={heroContent.lead} />
-          </div>
+          </HeroAnimatedContainer>
         </div>
       </div>
 
