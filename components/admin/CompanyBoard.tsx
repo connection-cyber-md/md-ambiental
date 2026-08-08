@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { createCompany, updateCompany, deleteCompany } from "@/app/admin/compliance/actions";
-import { licenseStatus, LICENSE_STATUS_LABEL, LICENSE_STATUS_CLASSES } from "@/lib/compliance/licenseStatus";
+import { licenseStatus, LICENSE_STATUS_LABEL, LICENSE_STATUS_CLASSES, type LicenseStatus } from "@/lib/compliance/licenseStatus";
+import { SyntheticBadge } from "@/components/ui/SyntheticBadge";
 
 type Company = {
   id: string;
@@ -18,6 +19,7 @@ type Company = {
   contact_email: string | null;
   contact_phone: string | null;
   status: string;
+  is_synthetic?: boolean;
 };
 
 const inputClasses =
@@ -107,7 +109,7 @@ function CompanyForm({
         <button type="button" onClick={onCancel} className="font-mono text-[11px] uppercase tracking-[0.05em] border border-ink/15 rounded-full px-3.5 py-1.5">
           Cancelar
         </button>
-        <button type="submit" disabled={pending} className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50">
+        <button type="submit" disabled={pending} className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50">
           {pending ? "Salvando…" : "Salvar"}
         </button>
       </div>
@@ -115,8 +117,22 @@ function CompanyForm({
   );
 }
 
-export function CompanyBoard({ companies }: { companies: Company[] }) {
-  const [showCreate, setShowCreate] = useState(false);
+const STATUS_SEVERITY: Record<LicenseStatus, number> = {
+  vencida: 0,
+  vence_em_breve: 1,
+  sem_data: 2,
+  valida: 3,
+};
+
+export function CompanyBoard({
+  companies,
+  showCreate,
+  onCloseCreate,
+}: {
+  companies: Company[];
+  showCreate: boolean;
+  onCloseCreate: () => void;
+}) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -128,30 +144,30 @@ export function CompanyBoard({ companies }: { companies: Company[] }) {
     if ("error" in result) alert(result.error);
   }
 
+  const sortedCompanies = [...companies].sort(
+    (a, b) => STATUS_SEVERITY[licenseStatus(a.license_expiry_date)] - STATUS_SEVERITY[licenseStatus(b.license_expiry_date)]
+  );
+
   return (
     <div>
-      <div className="flex justify-end mb-3">
-        <button
-          onClick={() => setShowCreate((v) => !v)}
-          className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-4 py-2"
-        >
-          {showCreate ? "Fechar" : "+ Novo cliente"}
-        </button>
-      </div>
-
-      {showCreate && <CompanyForm onCancel={() => setShowCreate(false)} action={createCompany} />}
+      {showCreate && <CompanyForm onCancel={onCloseCreate} action={createCompany} />}
 
       {companies.length === 0 ? (
         <div className="bg-white border border-ink/10 p-8 text-[15px] text-steel">Nenhum cliente cadastrado ainda.</div>
       ) : (
         <div className="bg-white border border-ink/10 divide-y divide-ink/10">
-          {companies.map((c) =>
+          {sortedCompanies.map((c) =>
             editingId === c.id ? (
               <div key={c.id} className="p-4">
                 <CompanyForm company={c} onCancel={() => setEditingId(null)} action={updateCompany.bind(null, c.id)} />
               </div>
             ) : (
-              <div key={c.id} className="p-4 flex items-center justify-between gap-6 flex-wrap">
+              <div
+                key={c.id}
+                className={`p-4 flex items-center justify-between gap-6 flex-wrap ${
+                  licenseStatus(c.license_expiry_date) === "vencida" ? "bg-red-50" : ""
+                }`}
+              >
                 <div>
                   <div className="text-[14.5px] font-medium text-ink">{c.razao_social}</div>
                   <div className="text-[12px] text-steel mt-1">
@@ -160,6 +176,7 @@ export function CompanyBoard({ companies }: { companies: Company[] }) {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
+                  {c.is_synthetic && <SyntheticBadge />}
                   <span
                     className={`text-[11.5px] font-mono uppercase tracking-[0.04em] border rounded-full px-3 py-1 whitespace-nowrap ${LICENSE_STATUS_CLASSES[licenseStatus(c.license_expiry_date)]}`}
                   >

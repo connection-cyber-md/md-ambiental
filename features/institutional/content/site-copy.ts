@@ -52,7 +52,7 @@ export const services = [
 
 export const processContent = {
   eyebrow: "Facilite o descarte",
-  title: "Conheça o nosso processo",
+  title: "Nosso Processo",
   intro: [
     "Desde o primeiro contato, nossa equipe está à disposição para explicar todos os detalhes e agendar o serviço de forma personalizada. A coleta é realizada diretamente em seu estabelecimento, com profissionalismo e total conformidade às normas vigentes.",
     "Após a coleta, conduzimos uma análise rigorosa da qualidade do óleo, seguida pela separação adequada. Por fim, o óleo é direcionado para descarte ou reutilização de forma ambientalmente correta, completando o ciclo com compromisso e sustentabilidade.",
@@ -99,7 +99,7 @@ export const transparencyContent = {
 
 export const reviewsContent = {
   eyebrow: "Prova social",
-  title: "O que dizem sobre a MD Ambiental",
+  title: "Sobre a MD Ambiental",
   rating: "5,0",
   reviewCount: 38,
   reviews: [

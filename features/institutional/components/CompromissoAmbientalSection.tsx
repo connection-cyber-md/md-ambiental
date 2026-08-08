@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { TruckImageLoop } from "@/features/institutional/components/TruckImageLoop";
 import { missionContent } from "@/features/institutional/content/site-copy";
 
 // Últimas duas palavras do eyebrow ("MD Ambiental") em negrito — mesmo
@@ -9,10 +9,10 @@ const eyebrowBrand = eyebrowWords.slice(-2).join(" ");
 
 export function CompromissoAmbientalSection() {
   return (
-    <section className="py-[50px] md:py-[70px] bg-paper" id="sobre">
+    <section className="py-[50px] md:py-[70px] bg-white" id="sobre">
       <div className="max-w-[1180px] mx-auto px-6 grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-11 md:gap-16 items-center">
         <div>
-          <p className="eyebrow text-[13.8px]">
+          <p className="eyebrow text-[27.6px]">
             {eyebrowRest} <strong className="font-bold">{eyebrowBrand}</strong>
           </p>
           <p className="font-display font-medium text-black text-[19px] leading-snug mb-7">
@@ -29,14 +29,7 @@ export function CompromissoAmbientalSection() {
           </ul>
         </div>
         <div className="order-first md:order-last">
-          <div className="relative aspect-[4/3]">
-            <Image
-              src="/brand/caminhao-6.webp"
-              alt="Caminhão-tanque da MD Ambiental em operação"
-              fill
-              className="object-cover rounded-sm shadow-2xl"
-            />
-          </div>
+          <TruckImageLoop />
           <div className="font-mono text-[11.5px] uppercase tracking-[0.06em] text-steel mt-3.5 flex justify-between">
             <span>Frota própria</span>
             <span>Piracicaba · SP</span>

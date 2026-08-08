@@ -24,3 +24,6 @@ supabase/.temp
 *.pem
 npm-debug.log*
 .vscode/
+
+# logs dos scripts de backup/restore/verify (locais, nao versionar)
+logs/

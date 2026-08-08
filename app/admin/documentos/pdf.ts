@@ -1,5 +1,7 @@
 import { PDFDocument, StandardFonts, rgb, type PDFFont } from "pdf-lib";
 import { createHash } from "crypto";
+import { readFile } from "fs/promises";
+import path from "path";
 
 // Cores da identidade visual (ver tailwind.config.ts) — mantidas em sync manualmente
 // porque pdf-lib não lê classes Tailwind.
@@ -76,13 +78,37 @@ export function validationCode(documentId: string, issueDate: string) {
     .slice(0, 16);
 }
 
+/**
+ * Logo oficial (public/brand/logo.png) embutido no cabeçalho de todo documento
+ * gerado pelo sistema. Lido do disco em cada chamada (arquivo pequeno, custo
+ * desprezível) para sempre refletir a versão mais recente sem exigir rebuild.
+ */
+async function embedLogo(doc: PDFDocument) {
+  const bytes = await readFile(path.join(process.cwd(), "public/brand/logo.png"));
+  const image = await doc.embedPng(bytes);
+  return image;
+}
+
 export async function generateCcoPdfBytes(data: CcoPdfData): Promise<Uint8Array> {
   const doc = await PDFDocument.create();
   const page = doc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
   const font = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);
 
-  let y = 780;
+  // Cabeçalho: logo centralizado no topo da página.
+  const logo = await embedLogo(doc);
+  const LOGO_HEIGHT = 54;
+  const logoScale = LOGO_HEIGHT / logo.height;
+  const logoWidth = logo.width * logoScale;
+  const logoY = PAGE_HEIGHT - 56 - LOGO_HEIGHT;
+  page.drawImage(logo, {
+    x: (PAGE_WIDTH - logoWidth) / 2,
+    y: logoY,
+    width: logoWidth,
+    height: LOGO_HEIGHT,
+  });
+
+  let y = logoY - 22;
 
   function text(str: string, opts: { size?: number; f?: PDFFont; color?: ReturnType<typeof rgb> } = {}) {
     page.drawText(str, {

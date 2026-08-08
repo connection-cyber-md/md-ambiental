@@ -34,8 +34,7 @@ export default async function AdminDashboardsPage() {
 
   return (
     <div>
-      <p className="eyebrow">Backoffice</p>
-      <h1 className="font-display text-[28px] text-ink mb-6">Dashboards</h1>
+      <h1 className="font-display text-[28px] text-black mb-6">Dashboards</h1>
 
       {metricsRes.error ? (
         <div className="bg-white border border-ink/10 p-8 text-[15px] text-steel">
@@ -51,14 +50,14 @@ export default async function AdminDashboardsPage() {
           para o tenant, elas aparecem aqui automaticamente.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {SCOPES.map((scope) => {
             const scopeMetrics = metrics.filter((m) => m.scope === scope);
             if (scopeMetrics.length === 0) return null;
 
             return (
-              <div key={scope} className="bg-white border border-ink/10 p-5">
-                <h2 className="font-mono text-[11.5px] uppercase tracking-[0.06em] text-steel mb-3">
+              <div key={scope} className="bg-white border-[1.5px] border-[#000000] rounded-lg p-5">
+                <h2 className="font-mono text-[11.5px] uppercase tracking-[0.06em] text-[#000000] mb-3">
                   {SCOPE_LABEL[scope] ?? scope}
                 </h2>
                 <div className="flex flex-col gap-3">

@@ -99,7 +99,7 @@ function MaintenanceForm({ vehicles, onCancel }: { vehicles: Vehicle[]; onCancel
         <button
           type="submit"
           disabled={pending}
-          className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50"
+          className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50"
         >
           {pending ? "Salvando…" : "Salvar"}
         </button>
@@ -125,7 +125,7 @@ export function FrotaBoard({ vehicles, maintenances }: { vehicles: Vehicle[]; ma
       <div className="flex justify-end mb-3">
         <button
           onClick={() => setShowCreate((v) => !v)}
-          className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-4 py-2"
+          className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-4 py-2"
         >
           {showCreate ? "Fechar" : "+ Lançar despesa"}
         </button>

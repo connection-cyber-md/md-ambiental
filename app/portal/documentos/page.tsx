@@ -72,7 +72,7 @@ export default async function PortalDocumentosPage() {
                     href={d.file_url}
                     target="_blank"
                     rel="noopener"
-                    className="text-[11.5px] font-mono uppercase tracking-[0.04em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-3 py-1 whitespace-nowrap hover:bg-ink-soft hover:border-brand-amber-deep transition-colors"
+                    className="text-[11.5px] font-mono uppercase tracking-[0.04em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-3 py-1 whitespace-nowrap hover:bg-ink-soft hover:border-brand-amber-deep transition-colors"
                   >
                     Baixar
                   </a>

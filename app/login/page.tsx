@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LoginForm } from "@/features/auth/components/LoginForm";
 import { LogoMark } from "@/components/ui/LogoMark";
+import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Entrar",
@@ -30,17 +31,19 @@ export default async function LoginPage({
           </div>
         )}
 
-        <div className="bg-white border border-ink/10 p-9">
-          <h1 className="font-display text-[24px] text-ink mb-1.5">Acessar o sistema</h1>
-          <p className="text-[14px] text-steel mb-7">
+        <div className="bg-white border border-ink/10 rounded-lg p-9">
+          <h1 className="font-display text-[24px] text-black mb-1.5">Acessar o sistema</h1>
+          <p className="text-[14px] text-black mb-7">
             Portal do Cliente, painel operacional, área do motorista e administração.
           </p>
           <LoginForm redirectTo={redirectTo} />
         </div>
 
-        <Link href="/" className="block text-center text-[13.5px] text-steel mt-6 hover:text-ink">
-          ← Voltar ao site institucional
-        </Link>
+        <div className="flex justify-center mt-6">
+          <Button href="/" variant="ghost-dark">
+            ← Voltar ao site institucional
+          </Button>
+        </div>
       </div>
     </div>
   );

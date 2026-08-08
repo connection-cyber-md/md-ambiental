@@ -61,7 +61,7 @@ export function TurnoBoard({
           <button
             type="submit"
             disabled={pending}
-            className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-4 py-2 disabled:opacity-50"
+            className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-4 py-2 disabled:opacity-50"
           >
             {pending ? "Encerrando…" : "Encerrar turno"}
           </button>
@@ -104,7 +104,7 @@ export function TurnoBoard({
         <button
           type="submit"
           disabled={pending}
-          className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-4 py-2 disabled:opacity-50"
+          className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-4 py-2 disabled:opacity-50"
         >
           {pending ? "Abrindo…" : "Abrir turno"}
         </button>

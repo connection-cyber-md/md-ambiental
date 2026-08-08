@@ -13,6 +13,10 @@ const NAV_LINKS = [
   { href: "#processo", label: "Processo" },
   { href: "#avaliacoes", label: "Avaliações" },
   { href: "#contato", label: "Localização" },
+  // TODO: ainda não existe seção/página de FAQ no site — este link fica
+  // apontando para uma âncora vazia até o conteúdo (perguntas e
+  // respostas reais) ser definido.
+  { href: "#faq", label: "FAQ" },
 ];
 
 export function SiteHeader() {
@@ -20,8 +24,8 @@ export function SiteHeader() {
     <header className="sticky top-0 left-0 right-0 z-50 bg-black py-4 border-b border-white/10">
       <div className="max-w-[1180px] mx-auto px-6 flex items-center justify-between gap-6">
         <Link href="/" className="flex items-center gap-2.5">
-          <LogoMark />
-          <span className="font-mono text-[13px] tracking-[0.08em] text-white uppercase">
+          <LogoMark size={49.3} />
+          <span className="font-mono text-[15.7px] tracking-[0.08em] text-white uppercase">
             {siteConfig.name}
           </span>
         </Link>
@@ -31,7 +35,7 @@ export function SiteHeader() {
             <a
               key={link.href}
               href={link.href}
-              className="text-[14.5px] font-medium text-[#eef0e9] opacity-85 hover:opacity-100 transition-opacity"
+              className="font-mono text-[14.5px] text-[#eef0e9] opacity-85 hover:opacity-100 transition-opacity"
             >
               {link.label}
             </a>
@@ -39,8 +43,11 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden md:flex items-center gap-5">
-          <a href={`tel:+${siteConfig.whatsapp.number}`} className="font-mono text-[13.5px] text-[#eef0e9] opacity-85">
-            {siteConfig.whatsapp.displayNumber}
+          <a
+            href="#sobre"
+            className="font-mono text-[14.5px] text-[#eef0e9] opacity-85 hover:opacity-100 transition-opacity"
+          >
+            Sobre
           </a>
           <Link href="/login" className={entrarClasses}>
             Entrar

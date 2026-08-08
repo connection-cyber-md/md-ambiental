@@ -1,10 +1,16 @@
 import { redirect } from "next/navigation";
 import { getAuthContext } from "@/lib/auth/context";
 import { AppShellNav } from "@/components/layout/AppShellNav";
+import { SyntheticBanner } from "@/components/ui/SyntheticBanner";
+import { createClient } from "@/lib/supabase/server";
+import { getSyntheticTotal } from "@/lib/synthetic/getSyntheticTotal";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const auth = await getAuthContext();
   if (!auth) redirect("/login?redirectTo=/admin");
+
+  const supabase = await createClient();
+  const syntheticTotal = await getSyntheticTotal(supabase);
 
   return (
     <div className="min-h-screen bg-paper">
@@ -13,6 +19,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         auth={auth}
         links={[
           { href: "/admin", label: "Visão geral" },
+          { href: "/admin/financeiro", label: "Financeiro" },
           { href: "/admin/bpo", label: "BPO" },
           { href: "/admin/compliance", label: "Conformidade" },
           { href: "/admin/dashboards", label: "Dashboards" },
@@ -20,7 +27,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           { href: "/admin/documentos", label: "Documentos" },
         ]}
       />
-      <main className="max-w-[1180px] mx-auto px-6 py-10">{children}</main>
+      <SyntheticBanner total={syntheticTotal} />
+      <main className="max-w-[1180px] mx-auto px-6 pt-6 pb-16">{children}</main>
     </div>
   );
 }

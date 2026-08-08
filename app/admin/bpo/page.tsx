@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { BpoBoard } from "@/components/admin/BpoBoard";
+import { BpoPageClient } from "@/components/admin/BpoPageClient";
 
 type BpoTask = {
   id: string;
@@ -9,6 +9,7 @@ type BpoTask = {
   status: string;
   due_date: string | null;
   assigned_to: string | null;
+  is_synthetic?: boolean;
 };
 
 export default async function AdminBpoPage() {
@@ -16,7 +17,7 @@ export default async function AdminBpoPage() {
 
   const tasksRes = await supabase
     .from("bpo_tasks")
-    .select("id, department, title, description, status, due_date, assigned_to")
+    .select("id, department, title, description, status, due_date, assigned_to, is_synthetic")
     .order("due_date", { ascending: true, nullsFirst: false });
 
   const tasks: BpoTask[] = tasksRes.data ?? [];
@@ -39,21 +40,19 @@ export default async function AdminBpoPage() {
     .neq("role", "client")
     .order("full_name", { ascending: true });
 
-  return (
-    <div>
-      <p className="eyebrow">Backoffice</p>
-      <h1 className="font-display text-[28px] text-ink mb-6">BPO — Tarefas por departamento</h1>
-
-      {tasksRes.error ? (
+  if (tasksRes.error) {
+    return (
+      <div>
+        <h1 className="font-display text-[28px] text-ink mb-6">BPO — Tarefas por departamento</h1>
         <div className="bg-white border border-ink/10 p-8 text-[15px] text-steel">
           <p className="mb-2">Não foi possível carregar as tarefas agora. Tente recarregar a página.</p>
           <p className="font-mono text-[12px] text-brand-amber-deep">
             {tasksRes.error.code}: {tasksRes.error.message}
           </p>
         </div>
-      ) : (
-        <BpoBoard tasks={tasks} assigneeNames={assigneeNames} assignees={assigneesRes.data ?? []} />
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  return <BpoPageClient tasks={tasks} assigneeNames={assigneeNames} assignees={assigneesRes.data ?? []} />;
 }

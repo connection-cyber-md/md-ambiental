@@ -8,7 +8,7 @@ type Variant = "primary" | "ghost-dark" | "ghost-light" | "line" | "whatsapp";
 // tamanho/fonte/cor do <Button>, garantindo que os dois fiquem idênticos
 // em vez de só parecidos.
 export const buttonUnifiedColorClasses =
-  "bg-ink text-brand-green border-[1.5px] border-brand-amber hover:bg-ink-soft hover:border-brand-amber-deep";
+  "bg-ink text-white border-[1.5px] border-brand-amber hover:bg-ink-soft hover:border-brand-amber-deep";
 
 // Fonte/tamanho iguais aos do botão "Entrar": mono, caixa alta, tracking.
 // Comprimento (+2px de padding horizontal) e altura (+1px de padding

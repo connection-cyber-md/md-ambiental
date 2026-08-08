@@ -13,12 +13,12 @@ export const siteConfig = {
     ibgeCode: "3538709",
     uf: "SP",
     mapsUrl:
-      "https://www.google.com/maps/place/MD+Ambiental+Coleta+de+%C3%93leo+Lubrificante+Usado/@-22.7570671,-47.6459738,17z",
+      "https://www.google.com/maps/place//@-22.7570671,-47.6459738,17z?entry=ttu&g_ep=EgoyMDI2MDgwNS4xIKXMDSoASAFQAw%3D%3D",
     // Street View da fachada, aberto pelo ícone de localização ao lado do
     // endereço no rodapé — diferente de mapsUrl (que aponta pra página do
     // local, usada no link de avaliações).
     streetViewUrl:
-      "https://www.google.com/maps/@-22.7571646,-47.6461647,3a,75y,54.77h,90t/data=!3m7!1e1!3m5!1sX_d9cqVzYDIsOvDLJcFlOw!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail",
+      "https://www.google.com/maps/place/Av.+S%C3%A3o+Paulo,+2115+-+Centro+(Tupi),+Piracicaba+-+SP,+13401-541/@-22.7570621,-47.6485487,17z/data=!3m1!4b1!4m6!3m5!1s0x94c6308aaddcc3cb:0x2523423a82508a87!8m2!3d-22.7570671!4d-47.6459738!16s%2Fg%2F11nxbn64c2?entry=ttu&g_ep=EgoyMDI2MDgwNS4xIKXMDSoASAFQAw%3D%3D",
   },
   socialProof: {
     rating: "5,0",

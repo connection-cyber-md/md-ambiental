@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
-import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
-import { buildWhatsAppLink } from "@/config/site";
+import { HeroLeadAndCtas } from "@/features/institutional/components/HeroLeadAndCtas";
 import { heroContent, trustBar } from "@/features/institutional/content/site-copy";
 
 // Título em duas linhas fixas: tudo menos as duas últimas palavras na
@@ -39,31 +37,13 @@ export function HeroSection() {
 
         <div className="max-w-[1180px] mx-auto px-6 w-full">
           <div className="max-w-[760px] pt-10">
-            <p className="eyebrow text-[14.5px]">{heroContent.eyebrow}</p>
-            <h1 className="font-display font-semibold text-white text-left text-[clamp(36px,6vw,66px)] leading-[0.98] tracking-tight mb-6">
+            <p className="eyebrow text-[18.5px]">{heroContent.eyebrow}</p>
+            <h1 className="font-display font-semibold text-white text-left text-[clamp(14.5px,3vw,29.5px)] leading-[0.98] tracking-tight mb-6">
               {titleFirstLine}
               <br />
               {titleSecondLine}
             </h1>
-            <p className="text-[#dfe4da] text-left text-[clamp(16px,1.6vw,19px)] max-w-[600px] mb-9">
-              {heroContent.lead}
-            </p>
-            <div className="flex gap-4 flex-wrap">
-              <Button
-                variant="whatsapp"
-                href={buildWhatsAppLink(
-                  "Olá! Quero agendar uma coleta de óleo lubrificante com a MD Ambiental."
-                )}
-                target="_blank"
-                rel="noopener"
-              >
-                <WhatsAppIcon className="w-[18px] h-[18px]" />
-                Agendar consulta
-              </Button>
-              <Button variant="ghost-dark" href="#processo">
-                Ver nosso processo
-              </Button>
-            </div>
+            <HeroLeadAndCtas lead={heroContent.lead} />
           </div>
         </div>
       </div>

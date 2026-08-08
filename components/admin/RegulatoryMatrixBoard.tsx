@@ -98,7 +98,7 @@ function RuleForm({
         <button type="button" onClick={onCancel} className="font-mono text-[11px] uppercase tracking-[0.05em] border border-ink/15 rounded-full px-3.5 py-1.5">
           Cancelar
         </button>
-        <button type="submit" disabled={pending} className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50">
+        <button type="submit" disabled={pending} className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50">
           {pending ? "Salvando…" : "Salvar"}
         </button>
       </div>
@@ -106,8 +106,15 @@ function RuleForm({
   );
 }
 
-export function RegulatoryMatrixBoard({ rules }: { rules: Rule[] }) {
-  const [showCreate, setShowCreate] = useState(false);
+export function RegulatoryMatrixBoard({
+  rules,
+  showCreate,
+  onCloseCreate,
+}: {
+  rules: Rule[];
+  showCreate: boolean;
+  onCloseCreate: () => void;
+}) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -121,16 +128,7 @@ export function RegulatoryMatrixBoard({ rules }: { rules: Rule[] }) {
 
   return (
     <div>
-      <div className="flex justify-end mb-3">
-        <button
-          onClick={() => setShowCreate((v) => !v)}
-          className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-4 py-2"
-        >
-          {showCreate ? "Fechar" : "+ Nova regra"}
-        </button>
-      </div>
-
-      {showCreate && <RuleForm onCancel={() => setShowCreate(false)} action={createRegulatoryRule} />}
+      {showCreate && <RuleForm onCancel={onCloseCreate} action={createRegulatoryRule} />}
 
       {rules.length === 0 ? (
         <div className="bg-white border border-ink/10 p-8 text-[15px] text-steel">Nenhuma regra cadastrada ainda.</div>

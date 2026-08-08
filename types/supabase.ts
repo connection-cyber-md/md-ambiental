@@ -47,6 +47,7 @@ export type Database = {
           description: string | null
           due_date: string | null
           id: string
+          is_synthetic: boolean
           status: Database["public"]["Enums"]["bpo_status"]
           tenant_id: string
           title: string
@@ -59,6 +60,7 @@ export type Database = {
           description?: string | null
           due_date?: string | null
           id?: string
+          is_synthetic?: boolean
           status?: Database["public"]["Enums"]["bpo_status"]
           tenant_id: string
           title: string
@@ -71,6 +73,7 @@ export type Database = {
           description?: string | null
           due_date?: string | null
           id?: string
+          is_synthetic?: boolean
           status?: Database["public"]["Enums"]["bpo_status"]
           tenant_id?: string
           title?: string
@@ -101,6 +104,7 @@ export type Database = {
           driver_id: string | null
           estimated_distance_km: number | null
           id: string
+          is_synthetic: boolean
           notes: string | null
           route_order: number | null
           status: Database["public"]["Enums"]["collection_status"]
@@ -116,6 +120,7 @@ export type Database = {
           driver_id?: string | null
           estimated_distance_km?: number | null
           id?: string
+          is_synthetic?: boolean
           notes?: string | null
           route_order?: number | null
           status?: Database["public"]["Enums"]["collection_status"]
@@ -131,6 +136,7 @@ export type Database = {
           driver_id?: string | null
           estimated_distance_km?: number | null
           id?: string
+          is_synthetic?: boolean
           notes?: string | null
           route_order?: number | null
           status?: Database["public"]["Enums"]["collection_status"]
@@ -185,6 +191,7 @@ export type Database = {
           created_at: string
           ibge_code: string | null
           id: string
+          is_synthetic: boolean
           license_expiry_date: string | null
           license_issue_date: string | null
           license_issuing_agency: string | null
@@ -210,6 +217,7 @@ export type Database = {
           created_at?: string
           ibge_code?: string | null
           id?: string
+          is_synthetic?: boolean
           license_expiry_date?: string | null
           license_issue_date?: string | null
           license_issuing_agency?: string | null
@@ -235,6 +243,7 @@ export type Database = {
           created_at?: string
           ibge_code?: string | null
           id?: string
+          is_synthetic?: boolean
           license_expiry_date?: string | null
           license_issue_date?: string | null
           license_issuing_agency?: string | null
@@ -307,6 +316,7 @@ export type Database = {
           document_number: string | null
           file_url: string | null
           id: string
+          is_synthetic: boolean
           issue_date: string | null
           status: Database["public"]["Enums"]["document_status"]
           tenant_id: string
@@ -319,6 +329,7 @@ export type Database = {
           document_number?: string | null
           file_url?: string | null
           id?: string
+          is_synthetic?: boolean
           issue_date?: string | null
           status?: Database["public"]["Enums"]["document_status"]
           tenant_id: string
@@ -331,6 +342,7 @@ export type Database = {
           document_number?: string | null
           file_url?: string | null
           id?: string
+          is_synthetic?: boolean
           issue_date?: string | null
           status?: Database["public"]["Enums"]["document_status"]
           tenant_id?: string
@@ -361,6 +373,7 @@ export type Database = {
           cnh_number: string
           created_at: string
           id: string
+          is_synthetic: boolean
           mopp_expiry: string | null
           profile_id: string
           status: Database["public"]["Enums"]["driver_status"]
@@ -374,6 +387,7 @@ export type Database = {
           cnh_number: string
           created_at?: string
           id?: string
+          is_synthetic?: boolean
           mopp_expiry?: string | null
           profile_id: string
           status?: Database["public"]["Enums"]["driver_status"]
@@ -387,6 +401,7 @@ export type Database = {
           cnh_number?: string
           created_at?: string
           id?: string
+          is_synthetic?: boolean
           mopp_expiry?: string | null
           profile_id?: string
           status?: Database["public"]["Enums"]["driver_status"]
@@ -414,6 +429,171 @@ export type Database = {
             columns: ["vehicle_id"]
             isOneToOne: false
             referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_accounts: {
+        Row: {
+          bank_name: string | null
+          created_at: string
+          id: string
+          initial_balance: number
+          is_active: boolean
+          kind: Database["public"]["Enums"]["financial_account_kind"]
+          name: string
+          tenant_id: string
+        }
+        Insert: {
+          bank_name?: string | null
+          created_at?: string
+          id?: string
+          initial_balance?: number
+          is_active?: boolean
+          kind: Database["public"]["Enums"]["financial_account_kind"]
+          name: string
+          tenant_id: string
+        }
+        Update: {
+          bank_name?: string | null
+          created_at?: string
+          id?: string
+          initial_balance?: number
+          is_active?: boolean
+          kind?: Database["public"]["Enums"]["financial_account_kind"]
+          name?: string
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_accounts_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_categories: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          tenant_id: string
+          type: Database["public"]["Enums"]["financial_entry_type"]
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          tenant_id: string
+          type: Database["public"]["Enums"]["financial_entry_type"]
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          tenant_id?: string
+          type?: Database["public"]["Enums"]["financial_entry_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_categories_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      financial_entries: {
+        Row: {
+          account_id: string
+          amount: number
+          category_id: string
+          created_at: string
+          created_by: string | null
+          description: string
+          due_date: string | null
+          entry_date: string
+          id: string
+          is_synthetic: boolean
+          paid_date: string | null
+          reference_id: string | null
+          reference_type: string | null
+          status: Database["public"]["Enums"]["financial_entry_status"]
+          tenant_id: string
+          type: Database["public"]["Enums"]["financial_entry_type"]
+          updated_at: string
+        }
+        Insert: {
+          account_id: string
+          amount: number
+          category_id: string
+          created_at?: string
+          created_by?: string | null
+          description: string
+          due_date?: string | null
+          entry_date: string
+          id?: string
+          is_synthetic?: boolean
+          paid_date?: string | null
+          reference_id?: string | null
+          reference_type?: string | null
+          status?: Database["public"]["Enums"]["financial_entry_status"]
+          tenant_id: string
+          type: Database["public"]["Enums"]["financial_entry_type"]
+          updated_at?: string
+        }
+        Update: {
+          account_id?: string
+          amount?: number
+          category_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          due_date?: string | null
+          entry_date?: string
+          id?: string
+          is_synthetic?: boolean
+          paid_date?: string | null
+          reference_id?: string | null
+          reference_type?: string | null
+          status?: Database["public"]["Enums"]["financial_entry_status"]
+          tenant_id?: string
+          type?: Database["public"]["Enums"]["financial_entry_type"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_entries_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "financial_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_entries_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "financial_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_entries_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_entries_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
             referencedColumns: ["id"]
           },
         ]
@@ -618,6 +798,7 @@ export type Database = {
           created_at: string
           description: string | null
           id: string
+          is_synthetic: boolean
           maintenance_date: string
           maintenance_type: Database["public"]["Enums"]["maintenance_type"]
           tenant_id: string
@@ -629,6 +810,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          is_synthetic?: boolean
           maintenance_date: string
           maintenance_type: Database["public"]["Enums"]["maintenance_type"]
           tenant_id: string
@@ -640,6 +822,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          is_synthetic?: boolean
           maintenance_date?: string
           maintenance_type?: Database["public"]["Enums"]["maintenance_type"]
           tenant_id?: string
@@ -734,6 +917,7 @@ export type Database = {
           created_at: string
           id: string
           insurance_expiry_date: string | null
+          is_synthetic: boolean
           license_expiry_date: string | null
           model: string | null
           plate: string
@@ -747,6 +931,7 @@ export type Database = {
           created_at?: string
           id?: string
           insurance_expiry_date?: string | null
+          is_synthetic?: boolean
           license_expiry_date?: string | null
           model?: string | null
           plate: string
@@ -760,6 +945,7 @@ export type Database = {
           created_at?: string
           id?: string
           insurance_expiry_date?: string | null
+          is_synthetic?: boolean
           license_expiry_date?: string | null
           model?: string | null
           plate?: string
@@ -799,6 +985,9 @@ export type Database = {
       document_status: "draft" | "issued" | "canceled"
       document_type: "CCO" | "MTR"
       driver_status: "active" | "inactive"
+      financial_account_kind: "banco" | "caixa"
+      financial_entry_status: "pending" | "paid" | "canceled"
+      financial_entry_type: "receita" | "despesa"
       maintenance_type: "oleo" | "pneu" | "lavagem" | "mecanica" | "documento"
       regulatory_sphere: "federal" | "estadual" | "municipal"
       user_role:
@@ -950,6 +1139,9 @@ export const Constants = {
       document_status: ["draft", "issued", "canceled"],
       document_type: ["CCO", "MTR"],
       driver_status: ["active", "inactive"],
+      financial_account_kind: ["banco", "caixa"],
+      financial_entry_status: ["pending", "paid", "canceled"],
+      financial_entry_type: ["receita", "despesa"],
       maintenance_type: ["oleo", "pneu", "lavagem", "mecanica", "documento"],
       regulatory_sphere: ["federal", "estadual", "municipal"],
       user_role: [

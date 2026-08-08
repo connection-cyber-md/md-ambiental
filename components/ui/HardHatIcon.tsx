@@ -1,9 +1,10 @@
 export function HardHatIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
-      <path d="M4 15.5a8 8 0 0 1 16 0" />
-      <rect x="2.5" y="15.5" width="19" height="2.6" rx="1.3" />
-      <line x1="12" y1="7.5" x2="12" y2="5.5" />
+      <path d="M5 14.3a7 8.3 0 0 1 14 0" />
+      <ellipse cx="12" cy="14.3" rx="8.6" ry="1.7" />
+      <path d="M12 6.2v8.1" />
+      <path d="M8.3 8.6a4.3 5.4 0 0 1 7.4 0" />
     </svg>
   );
 }

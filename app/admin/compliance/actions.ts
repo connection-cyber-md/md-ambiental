@@ -2,8 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { generateRegulatoryMatrixPdfBytes } from "./matrixPdf";
 
 type ActionResult = { success: true } | { error: string };
+type PdfResult = { success: true; url: string } | { error: string };
 
 function orNull(v: FormDataEntryValue | null) {
   const s = String(v ?? "").trim();
@@ -141,4 +143,40 @@ export async function deleteRegulatoryRule(id: string): Promise<ActionResult> {
   if (error) return { error: error.message };
   revalidatePath("/admin/compliance");
   return { success: true };
+}
+
+export async function generateMatrixPdf(): Promise<PdfResult> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { error: "Sessão expirada — faça login novamente." };
+
+  const profileRes = await supabase.from("profiles").select("tenant_id").eq("id", user.id).single();
+  if (!profileRes.data) return { error: "Perfil do usuário não encontrado." };
+  const tenantId = profileRes.data.tenant_id;
+
+  const tenantRes = await supabase.from("tenants").select("nome_fantasia, razao_social").eq("id", tenantId).single();
+  if (!tenantRes.data) return { error: "Tenant não encontrado." };
+
+  const rulesRes = await supabase
+    .from("regulatory_matrix")
+    .select("sphere, uf, rule_title, rule_description, required_documents, blocking_condition, reference_law")
+    .order("sphere", { ascending: true });
+  if (rulesRes.error) return { error: rulesRes.error.message };
+
+  const pdfBytes = await generateRegulatoryMatrixPdfBytes(
+    tenantRes.data.nome_fantasia ?? tenantRes.data.razao_social,
+    rulesRes.data ?? []
+  );
+
+  const filePath = `${tenantId}/matriz-regulatoria.pdf`;
+  const uploadRes = await supabase.storage.from("documents").upload(filePath, pdfBytes, {
+    contentType: "application/pdf",
+    upsert: true,
+  });
+  if (uploadRes.error) return { error: `Falha ao salvar o PDF: ${uploadRes.error.message}` };
+
+  const { data: publicUrlData } = supabase.storage.from("documents").getPublicUrl(filePath);
+  return { success: true, url: publicUrlData.publicUrl };
 }

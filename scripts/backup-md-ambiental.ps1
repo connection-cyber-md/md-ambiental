@@ -15,6 +15,9 @@
 #   -Silencioso     Suprime saidas nao-essenciais
 #   -DryRun         Simula todas as operacoes sem gravar nada
 #   -PularBanco     Pula o pg_dump (util quando so quer salvar o codigo)
+#   -PularGit       Pula commit/push (util quando ha trabalho pendente de
+#                   outra sessao no working tree que ainda nao deve ser
+#                   commitado - roda so OneDrive + HD Externo + ZIP + banco)
 #   -CommitMessage  Mensagem do commit git (default: "backup: <timestamp>")
 #
 # PRODUCAO: exige o parametro -Ambiente Producao *e* confirmacao
@@ -28,6 +31,7 @@
 #   .\scripts\backup-md-ambiental.ps1
 #   .\scripts\backup-md-ambiental.ps1 -DryRun
 #   .\scripts\backup-md-ambiental.ps1 -PularBanco -CommitMessage "feat: geracao de PDF do CCO"
+#   .\scripts\backup-md-ambiental.ps1 -PularGit
 #   .\scripts\backup-md-ambiental.ps1 -Ambiente Producao
 # ============================================================
 
@@ -37,6 +41,7 @@ param(
     [switch]$Silencioso,
     [switch]$DryRun,
     [switch]$PularBanco,
+    [switch]$PularGit,
     [string]$CommitMessage = ""
 )
 
@@ -300,7 +305,12 @@ if (!$PularBanco) {
     $Resultados["Banco"] = $true
 }
 
-$Resultados["GitHub"] = Sync-GitHub -Msg $CommitMessage
+if (!$PularGit) {
+    $Resultados["GitHub"] = Sync-GitHub -Msg $CommitMessage
+} else {
+    Write-Log "GIT COMMIT + PUSH ignorado (-PularGit)." "DarkGray"
+    $Resultados["GitHub"] = $true
+}
 Write-Log ""
 
 # -- Resumo --------------------------------------------------------------------

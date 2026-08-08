@@ -23,3 +23,14 @@ export const STATUS_CLASSES: Record<string, string> = {
   done: "text-brand-green-deep border-brand-green/40",
   blocked: "text-red-700 border-red-300",
 };
+
+// Prioritaria: bloqueada (sempre precisa de atencao) ou vencida e ainda nao
+// concluida. Usado pros cards de departamento destacarem o que precisa de
+// atencao assim que a tela abre, sem precisar clicar em nada.
+export function isPriorityTask(task: { status: string; due_date: string | null }): boolean {
+  if (task.status === "blocked") return true;
+  if (task.status === "done") return false;
+  if (!task.due_date) return false;
+  const today = new Date().toISOString().slice(0, 10);
+  return task.due_date < today;
+}

@@ -85,7 +85,7 @@ export function RotasBoard({ companies, drivers, pending }: { companies: Company
           <button
             type="submit"
             disabled={pendingSubmit}
-            className="w-full font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-4 py-2 disabled:opacity-50"
+            className="w-full font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-4 py-2 disabled:opacity-50"
           >
             {pendingSubmit ? "Gerando…" : "Gerar ordem de serviço"}
           </button>

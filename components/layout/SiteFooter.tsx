@@ -82,7 +82,7 @@ export function SiteFooter() {
               className="flex items-center justify-between gap-3 text-[13.5px] text-white mb-3 hover:text-brand-amber transition-colors"
             >
               <span>{siteConfig.address.line}</span>
-              <MapPinIcon className="w-[30px] h-[30px] shrink-0 text-brand-amber" />
+              <MapPinIcon className="w-[32.7px] h-[32.7px] shrink-0 text-brand-amber" />
             </a>
             <a href={`tel:+${siteConfig.whatsapp.number}`} className="block text-[13.5px] text-white hover:text-brand-amber transition-colors mb-3">
               {siteConfig.whatsapp.displayNumber}

@@ -20,7 +20,7 @@ export function AppShellNav({
   links: { href: string; label: string }[];
 }) {
   return (
-    <header className="bg-ink text-paper">
+    <header className="bg-ink text-paper sticky top-0 z-50">
       <div className="max-w-[1180px] mx-auto px-6 py-4 flex items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2">
@@ -47,7 +47,7 @@ export function AppShellNav({
           <form action="/auth/signout" method="post">
             <button
               type="submit"
-              className="font-mono text-[11.5px] uppercase tracking-[0.05em] border border-white/25 px-3 py-2 hover:border-white"
+              className="font-mono text-[11.5px] uppercase tracking-[0.05em] border border-white/25 rounded-full px-3 py-2 hover:border-white"
             >
               Sair
             </button>

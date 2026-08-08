@@ -98,7 +98,7 @@ function MetricForm({
         <button type="button" onClick={onCancel} className="font-mono text-[11px] uppercase tracking-[0.05em] border border-ink/15 rounded-full px-3.5 py-1.5">
           Cancelar
         </button>
-        <button type="submit" disabled={pending} className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50">
+        <button type="submit" disabled={pending} className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50">
           {pending ? "Salvando…" : "Salvar"}
         </button>
       </div>
@@ -124,7 +124,7 @@ export function ImpactMetricsBoard({ metrics }: { metrics: Metric[] }) {
       <div className="flex justify-end mb-3">
         <button
           onClick={() => setShowCreate((v) => !v)}
-          className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-4 py-2"
+          className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-4 py-2"
         >
           {showCreate ? "Fechar" : "+ Nova métrica"}
         </button>
@@ -135,7 +135,7 @@ export function ImpactMetricsBoard({ metrics }: { metrics: Metric[] }) {
       {metrics.length === 0 ? (
         <div className="bg-white border border-ink/10 p-8 text-[15px] text-steel">Nenhuma métrica cadastrada ainda.</div>
       ) : (
-        <div className="bg-white border border-ink/10 divide-y divide-ink/10">
+        <div className="bg-white border border-ink/10 rounded-lg divide-y divide-ink/10 overflow-hidden">
           {metrics.map((m) =>
             editingId === m.id ? (
               <div key={m.id} className="p-4">

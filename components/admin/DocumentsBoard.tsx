@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createDocument, updateDocument, deleteDocument, generateDocumentPdf } from "@/app/admin/documentos/actions";
+import { SyntheticBadge } from "@/components/ui/SyntheticBadge";
 
 type CollectionOption = {
   id: string;
@@ -18,6 +19,7 @@ type Document = {
   file_url: string | null;
   issue_date: string | null;
   status: string;
+  is_synthetic?: boolean;
   collections: { collection_date: string; companies: { razao_social: string } | { razao_social: string }[] | null } | { collection_date: string; companies: { razao_social: string } | { razao_social: string }[] | null }[] | null;
 };
 
@@ -130,7 +132,7 @@ function DocumentForm({
         <button
           type="submit"
           disabled={pending}
-          className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50"
+          className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50"
         >
           {pending ? "Salvando…" : "Salvar"}
         </button>
@@ -139,8 +141,21 @@ function DocumentForm({
   );
 }
 
-export function DocumentsBoard({ documents, collections }: { documents: Document[]; collections: CollectionOption[] }) {
-  const [showCreate, setShowCreate] = useState(false);
+export function DocumentsBoard({
+  documents,
+  collections,
+  showCreate,
+  onCloseCreate,
+  selectedType,
+  searchQuery,
+}: {
+  documents: Document[];
+  collections: CollectionOption[];
+  showCreate: boolean;
+  onCloseCreate: () => void;
+  selectedType: string | null;
+  searchQuery: string;
+}) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [generatingId, setGeneratingId] = useState<string | null>(null);
@@ -160,24 +175,24 @@ export function DocumentsBoard({ documents, collections }: { documents: Document
     if ("error" in result) alert(result.error);
   }
 
+  const query = searchQuery.trim().toLowerCase();
+  const filteredDocuments = documents.filter((d) => {
+    if (selectedType && d.type !== selectedType) return false;
+    if (query && !(d.document_number ?? "").toLowerCase().includes(query)) return false;
+    return true;
+  });
+
   return (
     <div>
-      <div className="flex justify-end mb-3">
-        <button
-          onClick={() => setShowCreate((v) => !v)}
-          className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-4 py-2"
-        >
-          {showCreate ? "Fechar" : "+ Novo documento"}
-        </button>
-      </div>
+      {showCreate && <DocumentForm collections={collections} onCancel={onCloseCreate} action={createDocument} />}
 
-      {showCreate && <DocumentForm collections={collections} onCancel={() => setShowCreate(false)} action={createDocument} />}
-
-      {documents.length === 0 ? (
-        <div className="bg-white border border-ink/10 p-8 text-[15px] text-steel">Nenhum documento emitido ainda.</div>
+      {filteredDocuments.length === 0 ? (
+        <div className="bg-white border border-ink/10 p-8 text-[15px] text-steel">
+          {documents.length === 0 ? "Nenhum documento emitido ainda." : "Nenhum documento encontrado com esse filtro."}
+        </div>
       ) : (
         <div className="bg-white border border-ink/10 divide-y divide-ink/10">
-          {documents.map((d) =>
+          {filteredDocuments.map((d) =>
             editingId === d.id ? (
               <div key={d.id} className="p-4">
                 <DocumentForm doc={d} collections={collections} onCancel={() => setEditingId(null)} action={updateDocument.bind(null, d.id)} />
@@ -197,6 +212,7 @@ export function DocumentsBoard({ documents, collections }: { documents: Document
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
+                  {d.is_synthetic && <SyntheticBadge />}
                   <span
                     className={`text-[11.5px] font-mono uppercase tracking-[0.04em] border rounded-full px-3 py-1 whitespace-nowrap ${STATUS_CLASSES[d.status] ?? "text-steel border-ink/15"}`}
                   >

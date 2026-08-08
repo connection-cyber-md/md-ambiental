@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { createBpoTask, updateBpoTask, deleteBpoTask } from "@/app/admin/bpo/actions";
+import { SyntheticBadge } from "@/components/ui/SyntheticBadge";
 import {
   DEPARTMENTS,
   DEPARTMENT_LABEL,
   BPO_STATUSES,
   STATUS_LABEL,
   STATUS_CLASSES,
+  isPriorityTask,
 } from "@/lib/bpo/constants";
 
 type BpoTask = {
@@ -18,6 +20,7 @@ type BpoTask = {
   status: string;
   due_date: string | null;
   assigned_to: string | null;
+  is_synthetic?: boolean;
 };
 
 type Assignee = { id: string; full_name: string };
@@ -114,7 +117,7 @@ function TaskForm({
         <button
           type="submit"
           disabled={pending}
-          className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50"
+          className="font-mono text-[11px] uppercase tracking-[0.05em] bg-ink text-white border-[1.5px] border-brand-amber rounded-full px-3.5 py-1.5 disabled:opacity-50"
         >
           {pending ? "Salvando…" : "Salvar"}
         </button>
@@ -127,12 +130,19 @@ export function BpoBoard({
   tasks,
   assigneeNames,
   assignees,
+  showCreate,
+  onCloseCreate,
+  selectedDept,
+  onClearSelectedDept,
 }: {
   tasks: BpoTask[];
   assigneeNames: Record<string, string>;
   assignees: Assignee[];
+  showCreate: boolean;
+  onCloseCreate: () => void;
+  selectedDept: string | null;
+  onClearSelectedDept: () => void;
 }) {
-  const [showCreate, setShowCreate] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -144,19 +154,34 @@ export function BpoBoard({
     if ("error" in result) alert(result.error);
   }
 
+  const visibleDepartments = selectedDept ? DEPARTMENTS.filter((d) => d === selectedDept) : DEPARTMENTS;
+
   return (
     <div>
-      <div className="flex justify-end mb-4">
-        <button
-          onClick={() => setShowCreate((v) => !v)}
-          className="font-mono text-[11.5px] uppercase tracking-[0.05em] bg-ink text-brand-green border-[1.5px] border-brand-amber rounded-full px-4 py-2"
-        >
-          {showCreate ? "Fechar" : "+ Nova tarefa"}
-        </button>
-      </div>
-
       {showCreate && (
-        <TaskForm assignees={assignees} onCancel={() => setShowCreate(false)} action={createBpoTask} />
+        <TaskForm assignees={assignees} onCancel={onCloseCreate} action={createBpoTask} />
+      )}
+
+      {selectedDept && (
+        <div className="flex items-center justify-between mb-4 bg-white border border-ink/10 px-4 py-2.5 print:hidden">
+          <span className="text-[13px] text-ink">
+            Mostrando só <strong>{DEPARTMENT_LABEL[selectedDept]}</strong>
+          </span>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => window.print()}
+              className="font-mono text-[11px] uppercase tracking-[0.05em] border border-ink/15 rounded-full px-3.5 py-1.5"
+            >
+              Imprimir
+            </button>
+            <button
+              onClick={onClearSelectedDept}
+              className="font-mono text-[11px] uppercase tracking-[0.05em] text-steel hover:text-ink"
+            >
+              Ver todos
+            </button>
+          </div>
+        </div>
       )}
 
       {tasks.length === 0 ? (
@@ -165,7 +190,7 @@ export function BpoBoard({
         </div>
       ) : (
         <div className="flex flex-col gap-8">
-          {DEPARTMENTS.map((dept) => {
+          {visibleDepartments.map((dept) => {
             const deptTasks = tasks.filter((t) => t.department === dept);
             if (deptTasks.length === 0) return null;
 
@@ -186,9 +211,21 @@ export function BpoBoard({
                         />
                       </div>
                     ) : (
-                      <div key={task.id} className="p-4 flex items-start justify-between gap-6 flex-wrap">
+                      <div
+                        key={task.id}
+                        className={`p-4 flex items-start justify-between gap-6 flex-wrap ${
+                          isPriorityTask(task) ? "bg-red-50" : ""
+                        }`}
+                      >
                         <div className="min-w-[240px]">
-                          <div className="text-[14.5px] font-medium text-ink">{task.title}</div>
+                          <div className="text-[14.5px] font-medium text-ink flex items-center gap-2">
+                            {task.title}
+                            {isPriorityTask(task) && (
+                              <span className="text-[10px] font-mono uppercase tracking-[0.05em] text-red-700 border border-red-300 rounded-full px-2 py-0.5">
+                                Prioritária
+                              </span>
+                            )}
+                          </div>
                           {task.description && (
                             <div className="text-[13px] text-steel mt-1">{task.description}</div>
                           )}
@@ -199,6 +236,7 @@ export function BpoBoard({
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
+                          {task.is_synthetic && <SyntheticBadge />}
                           <span
                             className={`text-[11.5px] font-mono uppercase tracking-[0.04em] border rounded-full px-3 py-1 whitespace-nowrap ${
                               STATUS_CLASSES[task.status] ?? "text-steel border-ink/15"
