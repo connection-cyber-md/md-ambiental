@@ -1,4 +1,28 @@
-"dependencies": {
+{
+  "name": "md-ambiental-platform",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "description": "MD Ambiental — plataforma SaaS Multi-Tenant (Fase 1: fundação)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm install --legacy-peer-deps && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "supabase:reset": "supabase db reset",
+    "supabase:migration:new": "supabase migration new",
+    "supabase:diff": "supabase db diff",
+    "supabase:lint": "supabase db lint",
+    "supabase:types": "supabase gen types typescript --local > types/supabase.ts"
+  },
+  "dependencies": {
     "@studio-freight/react-lenis": "^0.0.47",
     "@supabase/ssr": "^0.12.4",
     "@supabase/supabase-js": "^2.47.10",
@@ -17,10 +41,11 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@autoprefixer": "^10.4.20",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9.18.0",
     "eslint-config-next": "15.5.22",
     "postcss": "^8.5.1",
     "supabase": "^2.111.0",
     "tailwindcss": "^3.4.17"
   }
+}
