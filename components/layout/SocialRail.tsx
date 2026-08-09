@@ -3,6 +3,7 @@ import { FacebookIcon } from "@/components/ui/FacebookIcon";
 import { LinkedinIcon } from "@/components/ui/LinkedinIcon";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { siteConfig, buildWhatsAppLink } from "@/config/site";
+import { MapPin } from "lucide-react"; // Importação do ícone de localização
 
 const iconClasses =
   "w-8 h-8 md:w-[54px] md:h-[54px] rounded-full bg-ink border border-brand-amber flex items-center justify-center hover:bg-ink-soft hover:border-brand-amber-deep transition-colors";
@@ -34,6 +35,17 @@ export function SocialRail() {
         className={iconClasses}
       >
         <WhatsAppIcon className={`${glyphClasses} text-[#25D366]`} />
+      </a>
+      
+      {/* Botão de Localização injetado na última posição do trilho com o link definitivo */}
+      <a
+        href="https://www.google.com/maps/place/Av.+S%C3%A3o+Paulo,+2115+-+Centro+(Tupi),+Piracicaba+-+SP,+13401-541/@-22.7570671,-47.6459738,17z/data=!3m1!4b1!4m6!3m5!1s0x94c6308aaddcc3cb:0x2523423a82508a87!8m2!3d-22.7570671!4d-47.6459738!16s%2Fg%2F11nxbn64c2?entry=ttu&g_ep=EgoyMDI2MDgwNS4xIKXMDSoASAFQAw%3D%3D"
+        target="_blank"
+        rel="noopener"
+        aria-label="Localização"
+        className={iconClasses}
+      >
+        <MapPin className={`${glyphClasses} text-brand-amber`} strokeWidth={1.8} />
       </a>
     </div>
   );

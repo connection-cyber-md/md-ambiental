@@ -95,10 +95,10 @@ export async function ImpactTransparencySection() {
               return (
                 <li
                   key={item}
-                  className="bg-black rounded-lg border border-brand-amber/50 p-5 text-[14.5px] font-medium text-paper flex gap-3.5 items-center"
+                  className="bg-transparent rounded-lg border border-brand-amber/50 p-5 text-[14.5px] font-medium text-paper flex gap-3.5 items-center"
                 >
-                  <div className="w-9 h-9 rounded-full border border-brand-amber bg-white flex items-center justify-center shrink-0">
-                    <ItemIcon className="w-[16px] h-[16px] text-brand-green-deep" />
+                  <div className="w-9 h-9 rounded-full border border-brand-amber bg-black flex items-center justify-center shrink-0">
+                    <ItemIcon className="w-[16px] h-[16px] text-brand-green" />
                   </div>
                   {item}
                 </li>

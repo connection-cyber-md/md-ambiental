@@ -30,7 +30,7 @@ export function LogoMarquee() {
             <Image
                 src={`/logoclientes/${logo}`}
                 alt="Logo cliente"
-                width={100}
+                width={80}
                 height={40}
               className="object-contain opacity-100 transition-opacity duration-300 hover:opacity-100"
             />
