@@ -20,7 +20,7 @@ export function HeroSection() {
           priority
           className="object-cover object-[center_30%] -z-10"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(10,14,9,0.55)] via-[rgba(10,14,9,0.55)] to-[rgba(10,14,9,0.92)] -z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(10,14,9,0.0)] via-[rgba(10,14,9,0.0)] to-[rgba(10,14,9,0.0)] -z-10" />
 
         <div className="max-w-[1440px] mx-auto px-6 w-full flex items-center justify-between">
           <HeroAnimatedContainer className="max-w-[760px] pt-10">

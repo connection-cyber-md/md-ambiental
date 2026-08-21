@@ -1,6 +1,8 @@
 # MD Ambiental — Plataforma (Fase 1: Fundação)
 
-SaaS Multi-Tenant para a MD Ambiental (coleta e destinação de óleo lubrificante usado). Este repositório está na **Fase 1**: estrutura do projeto, schema do banco com RLS multi-tenant, autenticação e o esqueleto do site institucional. Os módulos operacionais (portal do cliente, painel operacional, app do motorista, backoffice, motor de conformidade, BPO, dashboards) são fases futuras — ver `features/*/README.md` para o que está reservado e ainda não implementado.
+SaaS Multi-Tenant para a MD Ambiental (coleta e destinação de óleo lubrificante usado). Este repositório está na **Fase 1**: estrutura do projeto, schema do banco com RLS multi-tenant, autenticação e o esqueleto do site institucional. Módulos operacionais já implementados: BPO, conformidade, dashboards, impacto, documentos (CCO/MTR), financeiro, estoque (bases/tanques/lotes/movimentações), expedição (destinatários/expedições/composição de lotes, com certificado de recebimento) e contratos (geradores e destinatários). O restante (CRM de geradores, portal do cliente estendido, app do motorista) é fase futura — ver `features/*/README.md` e `docs/0006-ARQUITETURA-DE-DADOS-OLUC.md` (seção "Roadmap") para a ordem planejada.
+
+O domínio de estoque/custódia (`bases`, `tanks`, `lots`, `stock_movements`, `samples`, `evidences`, `destinatarios`, `expeditions`, `expedition_lots`, `contracts`) foi modelado a partir de `documentos/PRD-OLUC-PLATAFORMA-DE-GESTAO-v1.0.md` — ver `docs/0006-ARQUITETURA-DE-DADOS-OLUC.md` para o que foi construído, o que ficou de fora de propósito e por quê.
 
 ## Stack
 
