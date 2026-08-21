@@ -39,6 +39,62 @@ export type Database = {
   }
   public: {
     Tables: {
+      bases: {
+        Row: {
+          address_bairro: string | null
+          address_cep: string | null
+          address_cidade: string | null
+          address_logradouro: string | null
+          address_numero: string | null
+          address_uf: string | null
+          capacity_total_litros: number | null
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          address_bairro?: string | null
+          address_cep?: string | null
+          address_cidade?: string | null
+          address_logradouro?: string | null
+          address_numero?: string | null
+          address_uf?: string | null
+          capacity_total_litros?: number | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          address_bairro?: string | null
+          address_cep?: string | null
+          address_cidade?: string | null
+          address_logradouro?: string | null
+          address_numero?: string | null
+          address_uf?: string | null
+          capacity_total_litros?: number | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bases_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bpo_tasks: {
         Row: {
           assigned_to: string | null
@@ -265,6 +321,79 @@ export type Database = {
           },
         ]
       }
+      contracts: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          destinatario_id: string | null
+          end_date: string | null
+          id: string
+          is_synthetic: boolean
+          notes: string | null
+          party_type: Database["public"]["Enums"]["contract_party_type"]
+          price_per_litro: number | null
+          sla_hours: number | null
+          start_date: string
+          status: Database["public"]["Enums"]["contract_status"]
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          destinatario_id?: string | null
+          end_date?: string | null
+          id?: string
+          is_synthetic?: boolean
+          notes?: string | null
+          party_type: Database["public"]["Enums"]["contract_party_type"]
+          price_per_litro?: number | null
+          sla_hours?: number | null
+          start_date: string
+          status?: Database["public"]["Enums"]["contract_status"]
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          destinatario_id?: string | null
+          end_date?: string | null
+          id?: string
+          is_synthetic?: boolean
+          notes?: string | null
+          party_type?: Database["public"]["Enums"]["contract_party_type"]
+          price_per_litro?: number | null
+          sla_hours?: number | null
+          start_date?: string
+          status?: Database["public"]["Enums"]["contract_status"]
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contracts_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contracts_destinatario_id_fkey"
+            columns: ["destinatario_id"]
+            isOneToOne: false
+            referencedRelation: "destinatarios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contracts_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dashboards_metrics: {
         Row: {
           created_at: string
@@ -309,45 +438,122 @@ export type Database = {
           },
         ]
       }
+      destinatarios: {
+        Row: {
+          address_cidade: string | null
+          address_uf: string | null
+          authorization_expiry_date: string | null
+          authorization_number: string | null
+          cnpj: string
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string
+          id: string
+          nome_fantasia: string | null
+          razao_social: string
+          status: string
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          address_cidade?: string | null
+          address_uf?: string | null
+          authorization_expiry_date?: string | null
+          authorization_number?: string | null
+          cnpj: string
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          nome_fantasia?: string | null
+          razao_social: string
+          status?: string
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          address_cidade?: string | null
+          address_uf?: string | null
+          authorization_expiry_date?: string | null
+          authorization_number?: string | null
+          cnpj?: string
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          nome_fantasia?: string | null
+          razao_social?: string
+          status?: string
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "destinatarios_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       documents: {
         Row: {
-          collection_id: string
+          collection_id: string | null
           created_at: string
           document_number: string | null
+          expedition_id: string | null
           file_url: string | null
           id: string
           is_synthetic: boolean
           issue_date: string | null
+          notes: string | null
           status: Database["public"]["Enums"]["document_status"]
+          superseded_by: string | null
           tenant_id: string
           type: Database["public"]["Enums"]["document_type"]
           updated_at: string
+          verification_code: string | null
+          version: number
         }
         Insert: {
-          collection_id: string
+          collection_id?: string | null
           created_at?: string
           document_number?: string | null
+          expedition_id?: string | null
           file_url?: string | null
           id?: string
           is_synthetic?: boolean
           issue_date?: string | null
+          notes?: string | null
           status?: Database["public"]["Enums"]["document_status"]
+          superseded_by?: string | null
           tenant_id: string
           type: Database["public"]["Enums"]["document_type"]
           updated_at?: string
+          verification_code?: string | null
+          version?: number
         }
         Update: {
-          collection_id?: string
+          collection_id?: string | null
           created_at?: string
           document_number?: string | null
+          expedition_id?: string | null
           file_url?: string | null
           id?: string
           is_synthetic?: boolean
           issue_date?: string | null
+          notes?: string | null
           status?: Database["public"]["Enums"]["document_status"]
+          superseded_by?: string | null
           tenant_id?: string
           type?: Database["public"]["Enums"]["document_type"]
           updated_at?: string
+          verification_code?: string | null
+          version?: number
         }
         Relationships: [
           {
@@ -355,6 +561,20 @@ export type Database = {
             columns: ["collection_id"]
             isOneToOne: false
             referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_expedition_id_fkey"
+            columns: ["expedition_id"]
+            isOneToOne: false
+            referencedRelation: "expeditions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_superseded_by_fkey"
+            columns: ["superseded_by"]
+            isOneToOne: false
+            referencedRelation: "documents"
             referencedColumns: ["id"]
           },
           {
@@ -426,6 +646,209 @@ export type Database = {
           },
           {
             foreignKeyName: "drivers_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      evidences: {
+        Row: {
+          captured_at: string
+          captured_by: string | null
+          collection_id: string
+          created_at: string
+          file_url: string | null
+          id: string
+          is_synthetic: boolean
+          latitude: number | null
+          longitude: number | null
+          tenant_id: string
+          type: Database["public"]["Enums"]["evidence_type"]
+        }
+        Insert: {
+          captured_at?: string
+          captured_by?: string | null
+          collection_id: string
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          is_synthetic?: boolean
+          latitude?: number | null
+          longitude?: number | null
+          tenant_id: string
+          type: Database["public"]["Enums"]["evidence_type"]
+        }
+        Update: {
+          captured_at?: string
+          captured_by?: string | null
+          collection_id?: string
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          is_synthetic?: boolean
+          latitude?: number | null
+          longitude?: number | null
+          tenant_id?: string
+          type?: Database["public"]["Enums"]["evidence_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evidences_captured_by_fkey"
+            columns: ["captured_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "evidences_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "evidences_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      expedition_lots: {
+        Row: {
+          created_at: string
+          expedition_id: string
+          id: string
+          is_synthetic: boolean
+          lot_id: string
+          tenant_id: string
+          volume_litros: number
+        }
+        Insert: {
+          created_at?: string
+          expedition_id: string
+          id?: string
+          is_synthetic?: boolean
+          lot_id: string
+          tenant_id: string
+          volume_litros: number
+        }
+        Update: {
+          created_at?: string
+          expedition_id?: string
+          id?: string
+          is_synthetic?: boolean
+          lot_id?: string
+          tenant_id?: string
+          volume_litros?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expedition_lots_expedition_id_fkey"
+            columns: ["expedition_id"]
+            isOneToOne: false
+            referencedRelation: "expeditions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expedition_lots_lot_id_fkey"
+            columns: ["lot_id"]
+            isOneToOne: false
+            referencedRelation: "lots"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expedition_lots_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      expeditions: {
+        Row: {
+          created_at: string
+          destinatario_id: string
+          driver_id: string | null
+          expedition_date: string
+          id: string
+          is_synthetic: boolean
+          notes: string | null
+          receipt_document_id: string | null
+          reconciled_at: string | null
+          status: Database["public"]["Enums"]["expedition_status"]
+          tenant_id: string
+          total_volume_litros: number | null
+          updated_at: string
+          vehicle_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          destinatario_id: string
+          driver_id?: string | null
+          expedition_date?: string
+          id?: string
+          is_synthetic?: boolean
+          notes?: string | null
+          receipt_document_id?: string | null
+          reconciled_at?: string | null
+          status?: Database["public"]["Enums"]["expedition_status"]
+          tenant_id: string
+          total_volume_litros?: number | null
+          updated_at?: string
+          vehicle_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          destinatario_id?: string
+          driver_id?: string | null
+          expedition_date?: string
+          id?: string
+          is_synthetic?: boolean
+          notes?: string | null
+          receipt_document_id?: string | null
+          reconciled_at?: string | null
+          status?: Database["public"]["Enums"]["expedition_status"]
+          tenant_id?: string
+          total_volume_litros?: number | null
+          updated_at?: string
+          vehicle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expeditions_destinatario_id_fkey"
+            columns: ["destinatario_id"]
+            isOneToOne: false
+            referencedRelation: "destinatarios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expeditions_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "drivers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expeditions_receipt_document_id_fkey"
+            columns: ["receipt_document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expeditions_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expeditions_vehicle_id_fkey"
             columns: ["vehicle_id"]
             isOneToOne: false
             referencedRelation: "vehicles"
@@ -654,6 +1077,66 @@ export type Database = {
           },
         ]
       }
+      lots: {
+        Row: {
+          closed_at: string | null
+          code: string
+          created_at: string
+          id: string
+          is_synthetic: boolean
+          opened_at: string
+          quality_classification: string | null
+          status: Database["public"]["Enums"]["lot_status"]
+          tank_id: string
+          tenant_id: string
+          updated_at: string
+          volume_litros: number
+        }
+        Insert: {
+          closed_at?: string | null
+          code: string
+          created_at?: string
+          id?: string
+          is_synthetic?: boolean
+          opened_at?: string
+          quality_classification?: string | null
+          status?: Database["public"]["Enums"]["lot_status"]
+          tank_id: string
+          tenant_id: string
+          updated_at?: string
+          volume_litros?: number
+        }
+        Update: {
+          closed_at?: string | null
+          code?: string
+          created_at?: string
+          id?: string
+          is_synthetic?: boolean
+          opened_at?: string
+          quality_classification?: string | null
+          status?: Database["public"]["Enums"]["lot_status"]
+          tank_id?: string
+          tenant_id?: string
+          updated_at?: string
+          volume_litros?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lots_tank_id_fkey"
+            columns: ["tank_id"]
+            isOneToOne: false
+            referencedRelation: "tanks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lots_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           company_id: string | null
@@ -749,6 +1232,215 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      samples: {
+        Row: {
+          classification: string | null
+          collection_id: string
+          contaminants_declared: string | null
+          created_at: string
+          id: string
+          is_synthetic: boolean
+          notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          seal_code: string | null
+          status: Database["public"]["Enums"]["sample_status"]
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          classification?: string | null
+          collection_id: string
+          contaminants_declared?: string | null
+          created_at?: string
+          id?: string
+          is_synthetic?: boolean
+          notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          seal_code?: string | null
+          status?: Database["public"]["Enums"]["sample_status"]
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          classification?: string | null
+          collection_id?: string
+          contaminants_declared?: string | null
+          created_at?: string
+          id?: string
+          is_synthetic?: boolean
+          notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          seal_code?: string | null
+          status?: Database["public"]["Enums"]["sample_status"]
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "samples_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "samples_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "samples_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stock_movements: {
+        Row: {
+          collection_id: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_synthetic: boolean
+          lot_id: string | null
+          reason: string | null
+          related_movement_id: string | null
+          tank_id: string
+          tenant_id: string
+          type: Database["public"]["Enums"]["movement_type"]
+          volume_litros: number
+        }
+        Insert: {
+          collection_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_synthetic?: boolean
+          lot_id?: string | null
+          reason?: string | null
+          related_movement_id?: string | null
+          tank_id: string
+          tenant_id: string
+          type: Database["public"]["Enums"]["movement_type"]
+          volume_litros: number
+        }
+        Update: {
+          collection_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_synthetic?: boolean
+          lot_id?: string | null
+          reason?: string | null
+          related_movement_id?: string | null
+          tank_id?: string
+          tenant_id?: string
+          type?: Database["public"]["Enums"]["movement_type"]
+          volume_litros?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stock_movements_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_lot_id_fkey"
+            columns: ["lot_id"]
+            isOneToOne: false
+            referencedRelation: "lots"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_related_movement_id_fkey"
+            columns: ["related_movement_id"]
+            isOneToOne: false
+            referencedRelation: "stock_movements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_tank_id_fkey"
+            columns: ["tank_id"]
+            isOneToOne: false
+            referencedRelation: "tanks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stock_movements_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tanks: {
+        Row: {
+          base_id: string
+          capacity_litros: number
+          code: string
+          created_at: string
+          id: string
+          material_class: string | null
+          status: Database["public"]["Enums"]["tank_status"]
+          tenant_id: string
+          updated_at: string
+        }
+        Insert: {
+          base_id: string
+          capacity_litros: number
+          code: string
+          created_at?: string
+          id?: string
+          material_class?: string | null
+          status?: Database["public"]["Enums"]["tank_status"]
+          tenant_id: string
+          updated_at?: string
+        }
+        Update: {
+          base_id?: string
+          capacity_litros?: number
+          code?: string
+          created_at?: string
+          id?: string
+          material_class?: string | null
+          status?: Database["public"]["Enums"]["tank_status"]
+          tenant_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tanks_base_id_fkey"
+            columns: ["base_id"]
+            isOneToOne: false
+            referencedRelation: "bases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tanks_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       tenants: {
         Row: {
@@ -982,14 +1674,33 @@ export type Database = {
         | "rh"
       bpo_status: "pending" | "in_progress" | "done" | "blocked"
       collection_status: "scheduled" | "in_progress" | "completed" | "canceled"
+      contract_party_type: "gerador" | "destinatario"
+      contract_status: "draft" | "active" | "suspended" | "terminated"
       document_status: "draft" | "issued" | "canceled"
-      document_type: "CCO" | "MTR"
+      document_type: "CCO" | "MTR" | "CRC"
       driver_status: "active" | "inactive"
+      evidence_type: "photo" | "signature" | "geolocation" | "document"
+      expedition_status:
+        | "scheduled"
+        | "in_transit"
+        | "delivered"
+        | "reconciled"
+        | "canceled"
       financial_account_kind: "banco" | "caixa"
       financial_entry_status: "pending" | "paid" | "canceled"
       financial_entry_type: "receita" | "despesa"
+      lot_status: "open" | "closed" | "expedited" | "blocked"
       maintenance_type: "oleo" | "pneu" | "lavagem" | "mecanica" | "documento"
+      movement_type:
+        | "entrada"
+        | "transferencia"
+        | "ajuste"
+        | "perda"
+        | "expedicao"
+        | "inventario"
       regulatory_sphere: "federal" | "estadual" | "municipal"
+      sample_status: "pending" | "approved" | "quarantine" | "rejected"
+      tank_status: "active" | "maintenance" | "inactive"
       user_role:
         | "system_admin"
         | "tenant_admin"
@@ -1136,14 +1847,35 @@ export const Constants = {
       ],
       bpo_status: ["pending", "in_progress", "done", "blocked"],
       collection_status: ["scheduled", "in_progress", "completed", "canceled"],
+      contract_party_type: ["gerador", "destinatario"],
+      contract_status: ["draft", "active", "suspended", "terminated"],
       document_status: ["draft", "issued", "canceled"],
-      document_type: ["CCO", "MTR"],
+      document_type: ["CCO", "MTR", "CRC"],
       driver_status: ["active", "inactive"],
+      evidence_type: ["photo", "signature", "geolocation", "document"],
+      expedition_status: [
+        "scheduled",
+        "in_transit",
+        "delivered",
+        "reconciled",
+        "canceled",
+      ],
       financial_account_kind: ["banco", "caixa"],
       financial_entry_status: ["pending", "paid", "canceled"],
       financial_entry_type: ["receita", "despesa"],
+      lot_status: ["open", "closed", "expedited", "blocked"],
       maintenance_type: ["oleo", "pneu", "lavagem", "mecanica", "documento"],
+      movement_type: [
+        "entrada",
+        "transferencia",
+        "ajuste",
+        "perda",
+        "expedicao",
+        "inventario",
+      ],
       regulatory_sphere: ["federal", "estadual", "municipal"],
+      sample_status: ["pending", "approved", "quarantine", "rejected"],
+      tank_status: ["active", "maintenance", "inactive"],
       user_role: [
         "system_admin",
         "tenant_admin",

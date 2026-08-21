@@ -1,5 +1,10 @@
-# Backoffice Administrativo (reservado)
+# Backoffice Administrativo
 
-Não implementado nesta fase. Vai agregar os módulos de BPO, conformidade e dashboards (ver `features/bpo`, `features/compliance`, `features/dashboards`), além de CRM de geradores, controle de estoque e financeiro.
+Implementado: BPO (`features/bpo`), conformidade (`features/compliance`), dashboards (`features/dashboards`),
+documentos (CCO/MTR), impacto, financeiro, estoque (bases/tanques/lotes/movimentações), expedição
+(destinatários/expedições/composição de lotes, com anexação do certificado de recebimento) e contratos
+(geradores e destinatários) — ver `docs/0006-ARQUITETURA-DE-DADOS-OLUC.md`.
 
-O placeholder atual da rota vive em `app/admin/page.tsx`.
+Reservado: CRM de geradores (cadastro de `companies` ainda só via seed/banco, sem tela própria no admin).
+
+Entrada da rota em `app/admin/page.tsx`; cada módulo é uma sub-rota (`app/admin/<modulo>/`).

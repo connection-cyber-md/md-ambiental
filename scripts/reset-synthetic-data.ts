@@ -15,14 +15,17 @@
 // --apply se nao bater -- evita apagar dado em produção por engano de
 // .env.local trocado.
 //
-// financial_accounts e financial_categories NAO sao apagados: sao estrutura
-// de plano de contas (nao tem is_synthetic), nao dado transacional de
-// demonstracao.
+// financial_accounts, financial_categories, bases, tanks e destinatarios NAO
+// sao apagados: sao estrutura (nao tem is_synthetic), nao dado transacional
+// de demonstracao.
 //
-// Ordem de exclusao respeita as FKs do schema:
-//   documents -> vehicle_maintenance -> financial_entries -> bpo_tasks
-//   -> collections -> vehicles -> drivers (via exclusao do usuario auth,
-//   que cascateia profiles -> drivers) -> companies
+// Ordem de exclusao respeita as FKs do schema (dominio OLUC — 0027/0033 —
+// entra antes de documents/collections, que ele referencia):
+//   expedition_lots -> stock_movements -> samples -> evidences -> documents
+//   -> vehicle_maintenance -> financial_entries -> bpo_tasks -> contracts
+//   -> expeditions -> lots -> collections -> vehicles
+//   -> drivers (via exclusao do usuario auth, que cascateia profiles ->
+//   drivers) -> companies
 
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "../types/supabase";
@@ -60,10 +63,17 @@ const supabase = createClient<Database>(url, serviceKey, {
 // Ordem de exclusao (filhos antes de pais, respeitando FKs restrict/cascade).
 // Cada entrada e uma tabela com coluna is_synthetic filtravel diretamente.
 const SYNTHETIC_TABLES = [
+  "expedition_lots",
+  "stock_movements",
+  "samples",
+  "evidences",
   "documents",
   "vehicle_maintenance",
   "financial_entries",
   "bpo_tasks",
+  "contracts",
+  "expeditions",
+  "lots",
   "collections",
   "vehicles",
 ] as const;
@@ -143,7 +153,11 @@ async function main() {
     return;
   }
 
-  console.log("Apagando na ordem: documents -> vehicle_maintenance -> financial_entries -> bpo_tasks -> collections -> vehicles -> drivers -> companies\n");
+  console.log(
+    "Apagando na ordem: expedition_lots -> stock_movements -> samples -> evidences -> documents -> " +
+      "vehicle_maintenance -> financial_entries -> bpo_tasks -> contracts -> expeditions -> lots -> " +
+      "collections -> vehicles -> drivers -> companies\n"
+  );
 
   for (const table of SYNTHETIC_TABLES) {
     const n = await deleteSynthetic(table);
