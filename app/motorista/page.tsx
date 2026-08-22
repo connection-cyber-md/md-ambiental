@@ -96,13 +96,13 @@ export default async function MotoristaPage() {
     volume_litros: number | null;
     status: string;
     notes: string | null;
-    companies: { razao_social: string; address_bairro: string | null; address_cidade: string | null } | { razao_social: string; address_bairro: string | null; address_cidade: string | null }[] | null;
+    companies: { razao_social: string; cnpj: string; address_bairro: string | null; address_cidade: string | null } | { razao_social: string; cnpj: string; address_bairro: string | null; address_cidade: string | null }[] | null;
   }[] = [];
 
   if (openShift) {
     const collectionsRes = await supabase
       .from("collections")
-      .select("id, collection_date, volume_litros, status, notes, companies(razao_social, address_bairro, address_cidade)")
+      .select("id, collection_date, volume_litros, status, notes, companies(razao_social, cnpj, address_bairro, address_cidade)")
       .eq("driver_id", driver.id)
       .in("status", ["scheduled", "in_progress"])
       .order("route_order", { ascending: true, nullsFirst: false })
@@ -141,14 +141,22 @@ export default async function MotoristaPage() {
               {collections.map((c) => {
                 const company = Array.isArray(c.companies) ? c.companies[0] : c.companies;
                 return (
-                  <div key={c.id} className="p-4">
-                    <div className="text-[14.5px] font-medium text-ink">{company?.razao_social ?? "Cliente"}</div>
-                    <div className="text-[12.5px] text-steel mt-1">
-                      {company?.address_bairro}, {company?.address_cidade}
-                      {" · "}
-                      {STATUS_LABEL[c.status] ?? c.status}
+                  <div key={c.id} className="p-4 flex items-center justify-between">
+                    <div>
+                      <div className="text-[14.5px] font-medium text-ink">{company?.razao_social ?? "Cliente"}</div>
+                      <div className="text-[12px] text-steel font-mono mt-0.5">
+                        CNPJ: {company?.cnpj ?? "N/A"} · {company?.address_bairro ?? ""}, {company?.address_cidade ?? ""}
+                      </div>
+                      <div className="text-[12.5px] text-steel mt-1">
+                        Status: <span className="uppercase font-semibold">{STATUS_LABEL[c.status] ?? c.status}</span>
+                      </div>
+                      {c.notes && <div className="text-[12px] text-steel mt-1 italic">{c.notes}</div>}
                     </div>
-                    {c.notes && <div className="text-[12px] text-steel mt-1 italic">{c.notes}</div>}
+                    <div className="text-right">
+                      <div className="font-mono text-[14px] font-semibold text-brand-green-deep">
+                        {c.volume_litros ? `${c.volume_litros} L` : "A medir"}
+                      </div>
+                    </div>
                   </div>
                 );
               })}
