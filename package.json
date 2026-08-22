@@ -8,9 +8,9 @@
   "description": "MD Ambiental — plataforma SaaS Multi-Tenant (Fase 1: fundação)",
   "scripts": {
     "dev": "next dev",
-    "build": "npm install --legacy-peer-deps && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "check": "npm run lint && npm run typecheck",
     "supabase:start": "supabase start",

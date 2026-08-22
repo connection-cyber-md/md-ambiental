@@ -55,8 +55,9 @@ export default async function PortalColetasPage() {
       {collectionsRes.error ? (
         <div className="bg-white border border-ink/10 p-8 text-[15px] text-steel">
           <p className="mb-2">Não foi possível carregar as coletas agora. Tente recarregar a página.</p>
+          {/* Erro técnico sanitizado para conformidade corporativa enterprise */}
           <p className="font-mono text-[12px] text-brand-amber-deep">
-            {collectionsRes.error.code}: {collectionsRes.error.message}
+            Erro interno de sincronização de dados.
           </p>
         </div>
       ) : collections.length === 0 ? (
