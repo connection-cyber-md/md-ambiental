@@ -6,16 +6,16 @@ export default async function OperacionalFrotaPage() {
   const supabase = await createClient();
 
   const [vehiclesRes, driversRes, maintenanceRes] = await Promise.all([
-    supabase
-      .from("vehicles")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supabase.from("vehicles" as any)
       .select("id, plate, model, license_expiry_date, insurance_expiry_date")
       .order("plate", { ascending: true }),
-    supabase
-      .from("drivers")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supabase.from("drivers" as any)
       .select("id, cnh_expiry, mopp_expiry, profiles(full_name)")
       .order("id", { ascending: true }),
-    supabase
-      .from("vehicle_maintenance")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supabase.from("vehicle_maintenance" as any)
       .select("id, vehicle_id, maintenance_type, description, cost, maintenance_date, vehicles(plate)")
       .order("maintenance_date", { ascending: false })
       .limit(20),
@@ -27,8 +27,10 @@ export default async function OperacionalFrotaPage() {
     .map((e) => `${e!.code ?? "?"}: ${e!.message}`);
   if (hasError) console.error("[/operacional/frota] query errors:", debugErrors);
 
-  const vehicles = vehiclesRes.data ?? [];
-  const drivers = driversRes.data ?? [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const vehicles = (vehiclesRes.data ?? []) as any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const drivers = (driversRes.data ?? []) as any[];
   const maintenances = maintenanceRes.data ?? [];
 
   type Alert = { key: string; label: string; status: ReturnType<typeof licenseStatus> };
@@ -47,7 +49,8 @@ export default async function OperacionalFrotaPage() {
 
   for (const d of drivers) {
     const profile = Array.isArray(d.profiles) ? d.profiles[0] : d.profiles;
-    const name = profile?.full_name ?? "Motorista";
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const name = (profile as any)?.full_name ?? "Motorista";
     const cnh = licenseStatus(d.cnh_expiry);
     if (cnh === "vencida" || cnh === "vence_em_breve") {
       alerts.push({ key: `${d.id}-cnh`, label: `${name} — CNH`, status: cnh });
@@ -59,8 +62,8 @@ export default async function OperacionalFrotaPage() {
   }
 
   return (
-    <div>
-      <p className="eyebrow">Painel Operacional</p>
+    <div className="p-8 max-w-7xl mx-auto">
+      <p className="eyebrow mb-1">Painel Operacional</p>
       <h1 className="font-display text-[28px] text-ink mb-6">Frota e conformidade</h1>
 
       {hasError ? (
@@ -100,7 +103,8 @@ export default async function OperacionalFrotaPage() {
             <h2 className="font-mono text-[11.5px] uppercase tracking-[0.06em] text-steel mb-3">
               Manutenção e custos (TCO)
             </h2>
-            <FrotaBoard vehicles={vehicles} maintenances={maintenances} />
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            <FrotaBoard vehicles={vehicles as any} maintenances={maintenances as any} />
           </section>
         </>
       )}
