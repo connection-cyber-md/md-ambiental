@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { VisaoGeralPageClient } from "@/components/admin/VisaoGeralPageClient";
 import { DEPARTMENTS, DEPARTMENT_LABEL, isPriorityTask } from "@/lib/bpo/constants";
 import { licenseStatus } from "@/lib/compliance/licenseStatus";
+import Link from "next/link";
 
 export default async function AdminPage() {
   const supabase = await createClient();
@@ -13,15 +14,19 @@ export default async function AdminPage() {
   const in30Days = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
   const [collectionsRes, companiesRes, bpoRes, driversRes, vehiclesRes] = await Promise.all([
-    supabase
-      .from("collections")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supabase.from("collections" as any)
       .select("id, status, volume_litros")
       .gte("collection_date", monthStart)
       .lt("collection_date", monthEnd),
-    supabase.from("companies").select("id, status, license_expiry_date"),
-    supabase.from("bpo_tasks").select("id, department, title, status, due_date"),
-    supabase.from("drivers").select("id, status, cnh_expiry"),
-    supabase.from("vehicles").select("id, status, license_expiry_date, insurance_expiry_date"),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supabase.from("companies" as any).select("id, status, license_expiry_date"),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supabase.from("bpo_tasks" as any).select("id, department, title, status, due_date"),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supabase.from("drivers" as any).select("id, status, cnh_expiry"),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supabase.from("vehicles" as any).select("id, status, license_expiry_date, insurance_expiry_date"),
   ]);
 
   const hasError = Boolean(
@@ -46,11 +51,16 @@ export default async function AdminPage() {
     );
   }
 
-  const collections = collectionsRes.data ?? [];
-  const companies = companiesRes.data ?? [];
-  const bpoTasks = bpoRes.data ?? [];
-  const drivers = driversRes.data ?? [];
-  const vehicles = vehiclesRes.data ?? [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const collections = (collectionsRes.data ?? []) as any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const companies = (companiesRes.data ?? []) as any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const bpoTasks = (bpoRes.data ?? []) as any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const drivers = (driversRes.data ?? []) as any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const vehicles = (vehiclesRes.data ?? []) as any[];
 
   const totalCollections = collections.length;
   const completedCollections = collections.filter((c) => c.status === "completed").length;
@@ -68,7 +78,8 @@ export default async function AdminPage() {
       department: dept,
       label: DEPARTMENT_LABEL[dept] ?? dept,
       total: deptTasks.filter((t) => t.status !== "done").length,
-      priorityTasks: deptTasks.filter(isPriorityTask).map((t) => ({ id: t.id, title: t.title, due_date: t.due_date })),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      priorityTasks: deptTasks.filter(isPriorityTask).map((t: any) => ({ id: t.id, title: t.title, due_date: t.due_date })),
     };
   });
 
@@ -80,11 +91,29 @@ export default async function AdminPage() {
     vehicles.filter((v) => ["vencida", "vence_em_breve"].includes(licenseStatus(v.insurance_expiry_date))).length;
 
   return (
-    <VisaoGeralPageClient
-      kpis={{ totalCollections, completedCollections, totalVolume, activeCompanies, expiringLicenses }}
-      departments={departments}
-      clientes={{ ativos: activeCompanies, vencidas: companiesVencidas }}
-      frota={{ motoristas: driversAtivos, veiculos: vehiclesAtivos, alertas: alertasFrota }}
-    />
+    <div>
+      {/* Atalho / Card para o Manual de Instruções */}
+      <div className="mb-8">
+        <Link
+          href="/admin/manual"
+          className="bg-white p-6 rounded-lg border border-ink/10 hover:border-brand-green-deep transition-all shadow-xs group block"
+        >
+          <span className="font-mono text-[11px] uppercase text-brand-green-deep block mb-1">Documentação & Uso</span>
+          <h3 className="font-display text-[18px] text-ink group-hover:text-brand-green-deep transition-colors mb-2">
+            Manual de Instruções →
+          </h3>
+          <p className="text-[13px] text-steel">
+            Consulte o guia operacional completo da plataforma e especificações arquiteturais.
+          </p>
+        </Link>
+      </div>
+
+      <VisaoGeralPageClient
+        kpis={{ totalCollections, completedCollections, totalVolume, activeCompanies, expiringLicenses }}
+        departments={departments}
+        clientes={{ ativos: activeCompanies, vencidas: companiesVencidas }}
+        frota={{ motoristas: driversAtivos, veiculos: vehiclesAtivos, alertas: alertasFrota }}
+      />
+    </div>
   );
 }
