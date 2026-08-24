@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createClient } from "@/lib/supabase/server";
 import { KpiCard } from "@/components/ui/KpiCard";
 import { licenseStatus, LICENSE_STATUS_LABEL } from "@/lib/compliance/licenseStatus";
@@ -47,8 +48,8 @@ export default async function PortalDashboardPage() {
     .map((e) => `${e!.code ?? "?"}: ${e!.message}`);
   if (hasError) console.error("[/portal] query errors:", debugErrors);
 
-  const company = companyRes.data;
-  const collections = collectionsRes.data ?? [];
+  const company = companyRes.data as any;
+  const collections = (collectionsRes.data ?? []) as any[];
 
   const totalVolume = collections.reduce((sum, c) => sum + Number(c.volume_litros ?? 0), 0);
   const lastCollection = collections.find((c) => c.status === "completed") ?? collections[0];

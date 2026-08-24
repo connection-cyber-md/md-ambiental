@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createClient } from "@/lib/supabase/server";
 
 const STATUS_LABEL: Record<string, string> = {
@@ -45,7 +46,7 @@ export default async function PortalColetasPage() {
     .eq("company_id", companyId)
     .order("collection_date", { ascending: false });
 
-  const collections = collectionsRes.data ?? [];
+  const collections = (collectionsRes.data ?? []) as any[];
 
   return (
     <div>
@@ -55,7 +56,6 @@ export default async function PortalColetasPage() {
       {collectionsRes.error ? (
         <div className="bg-white border border-ink/10 p-8 text-[15px] text-steel">
           <p className="mb-2">Não foi possível carregar as coletas agora. Tente recarregar a página.</p>
-          {/* Erro técnico sanitizado para conformidade corporativa enterprise */}
           <p className="font-mono text-[12px] text-brand-amber-deep">
             Erro interno de sincronização de dados.
           </p>
@@ -66,7 +66,7 @@ export default async function PortalColetasPage() {
         </div>
       ) : (
         <div className="bg-white border border-ink/10 divide-y divide-ink/10">
-          {collections.map((c) => (
+          {collections.map((c: any) => (
             <div key={c.id} className="p-4 flex items-center justify-between gap-6 flex-wrap">
               <div>
                 <div className="text-[14.5px] font-medium text-ink">

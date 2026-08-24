@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createClient } from "@/lib/supabase/server";
 
 const TYPE_LABEL: Record<string, string> = {
@@ -20,16 +21,12 @@ const STATUS_CLASSES: Record<string, string> = {
 export default async function PortalDocumentosPage() {
   const supabase = await createClient();
 
-  // documents_select já restringe pelo join com collections->company_id do
-  // próprio usuário — não precisa filtrar company_id manualmente aqui como
-  // nas outras telas do portal (RLS já cobre este caso, diferente de
-  // companies_select).
   const documentsRes = await supabase
     .from("documents")
     .select("id, type, document_number, file_url, issue_date, status")
     .order("issue_date", { ascending: false });
 
-  const documents = documentsRes.data ?? [];
+  const documents = (documentsRes.data ?? []) as any[];
 
   return (
     <div>
@@ -49,7 +46,7 @@ export default async function PortalDocumentosPage() {
         </div>
       ) : (
         <div className="bg-white border border-ink/10 divide-y divide-ink/10">
-          {documents.map((d) => (
+          {documents.map((d: any) => (
             <div key={d.id} className="p-4 flex items-center justify-between gap-6 flex-wrap">
               <div>
                 <div className="text-[14.5px] font-medium text-ink">
