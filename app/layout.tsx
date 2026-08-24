@@ -23,11 +23,25 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "MD Ambiental — Especialistas em coleta de óleo lubrificante",
-    template: "%s · MD Ambiental",
+    default: "MD Ambiental — Gestão e Logística de OLUC",
+    template: "%s | MD Ambiental",
   },
   description:
-    "Coleta, análise e destinação responsável de óleo lubrificante usado. Coletor autorizado, 5,0★ no Google (38 avaliações).",
+    "Plataforma corporativa de ponta a ponta para gestão de óleo lubrificante usado e contaminado (OLUC), compliance ambiental, rotas e rastreabilidade B2B.",
+  keywords: ["OLUC", "Gestão de Resíduos", "Compliance Ambiental", "MTR", "CADRI", "Logística Reversa", "MD Ambiental"],
+  authors: [{ name: "Chief Integrated Systems Architect" }],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    url: "https://mdambiental.com.br",
+    title: "MD Ambiental — Gestão e Logística de OLUC",
+    description: "Plataforma corporativa para logística reversa de óleo lubrificante usado.",
+    siteName: "MD Ambiental Platform",
+  },
 };
 
 export default function RootLayout({
