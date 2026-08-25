@@ -26,7 +26,7 @@ export function HeroLeadAndCtas({ lead }: { lead: string }) {
     <>
       <HeroAnimatedItem>
         <p
-          className="text-black text-justify text-[clamp(18.7px,1.6vw,21.7px)] mb-9 font-medium"
+          className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] text-justify text-[clamp(18.7px,1.6vw,21.7px)] mb-9 font-medium"
           style={{ maxWidth: maxWidth ? `${maxWidth}px` : "600px" }}
         >
           {lead}
