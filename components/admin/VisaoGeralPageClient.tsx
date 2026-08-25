@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { KpiCard } from "@/components/ui/KpiCard";
 
 type PriorityTask = { id: string; title: string; due_date: string | null };
@@ -11,18 +12,36 @@ export function VisaoGeralPageClient({
   departments,
   clientes,
   frota,
+  crmDealsCount = 0,
 }: {
   kpis: { totalCollections: number; completedCollections: number; totalVolume: number; activeCompanies: number; expiringLicenses: number };
   departments: DeptData[];
   clientes: { ativos: number; vencidas: number };
   frota: { motoristas: number; veiculos: number; alertas: number };
+  crmDealsCount?: number;
 }) {
   const [selectedDept, setSelectedDept] = useState<string | null>(null);
   const selected = departments.find((d) => d.department === selectedDept) ?? null;
 
   return (
     <div>
-      <h1 className="font-display text-[28px] text-black mb-6">Visão geral</h1>
+      {/* Título "Visão geral" na esquerda e Card "Manual de Instruções" compacto na direita */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <h1 className="font-display text-[28px] text-black m-0">Visão geral</h1>
+        
+        <Link
+          href="/admin/manual"
+          className="bg-white border-[1.5px] border-[#000000] rounded-lg p-4 hover:border-brand-green transition-all block md:w-[450px]"
+        >
+          <div className="font-mono text-[10px] uppercase tracking-wider text-brand-green-deep font-bold mb-0.5">
+            DOCUMENTAÇÃO & USO
+          </div>
+          <div className="font-display text-[15px] text-ink font-semibold flex items-center justify-between">
+            <span>Manual de Instruções</span>
+            <span>→</span>
+          </div>
+        </Link>
+      </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <KpiCard
@@ -107,23 +126,54 @@ export function VisaoGeralPageClient({
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <KpiCard
-          label="Clientes"
-          value={String(clientes.ativos)}
-          hint={clientes.vencidas > 0 ? `${clientes.vencidas} licença${clientes.vencidas > 1 ? "s" : ""} vencida${clientes.vencidas > 1 ? "s" : ""}` : undefined}
-          accent={clientes.vencidas > 0}
-          borderClassName="border-[#000000]"
-          labelClassName="text-[#000000]"
-        />
-        <KpiCard
-          label="Motoristas e frota"
-          value={`${frota.motoristas} · ${frota.veiculos}`}
-          hint={frota.alertas > 0 ? `${frota.alertas} alerta${frota.alertas > 1 ? "s" : ""} de vencimento` : undefined}
-          accent={frota.alertas > 0}
-          borderClassName="border-[#000000]"
-          labelClassName="text-[#000000]"
-        />
+      {/* Cards Inferiores com Fontes Padronizadas */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white border-[1.5px] border-[#000000] rounded-lg p-6 flex flex-col justify-between">
+          <div>
+            <span className="text-[11px] text-[#000000] mb-1 block">Clientes</span>
+            <div className="font-display text-[22px] font-bold text-ink mb-2">{clientes.ativos}</div>
+          </div>
+          {clientes.vencidas > 0 ? (
+            <Link
+              href="/admin/compliance?filtro=licencas_vencidas"
+              className="text-[12px] font-semibold text-brand-amber-deep hover:underline inline-flex items-center gap-1 mt-2"
+            >
+              {clientes.vencidas} licença{clientes.vencidas > 1 ? "s" : ""} vencida{clientes.vencidas > 1 ? "s" : ""} →
+            </Link>
+          ) : (
+            <span className="text-[12px] text-steel mt-2 block">Nenhuma licença vencida</span>
+          )}
+        </div>
+
+        <div className="bg-white border-[1.5px] border-[#000000] rounded-lg p-6 flex flex-col justify-between">
+          <div>
+            <span className="text-[11px] text-[#000000] mb-1 block">Motoristas e frota</span>
+            <div className="font-display text-[22px] font-bold text-ink mb-2">{frota.motoristas} · {frota.veiculos}</div>
+          </div>
+          {frota.alertas > 0 ? (
+            <Link
+              href="/admin/expedicao?filtro=alertas_vencimento"
+              className="text-[12px] font-semibold text-brand-amber-deep hover:underline inline-flex items-center gap-1 mt-2"
+            >
+              {frota.alertas} alerta{frota.alertas > 1 ? "s" : ""} de vencimento →
+            </Link>
+          ) : (
+            <span className="text-[12px] text-steel mt-2 block">Nenhum alerta pendente</span>
+          )}
+        </div>
+
+        <div className="bg-white border-[1.5px] border-[#000000] rounded-lg p-6 flex flex-col justify-between">
+          <div>
+            <span className="text-[11px] text-[#000000] mb-1 block">CRM & Atendimento</span>
+            <div className="font-display text-[22px] font-bold text-ink mb-2">Pipeline OLUC</div>
+          </div>
+          <Link
+            href="/admin/crm"
+            className="text-[12px] font-semibold text-brand-green-deep hover:underline inline-flex items-center gap-1 mt-2"
+          >
+            Acessar Funil de Coletas →
+          </Link>
+        </div>
       </div>
     </div>
   );
