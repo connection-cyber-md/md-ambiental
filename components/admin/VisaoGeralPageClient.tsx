@@ -25,13 +25,13 @@ export function VisaoGeralPageClient({
 
   return (
     <div>
-      {/* Título "Visão geral" na esquerda e Card "Manual de Instruções" compacto na direita */}
+      {/* Título "Visão geral" na esquerda e Card "Manual de Instruções" visível apenas em desktop (hidden md:block) */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <h1 className="font-display text-[28px] text-black m-0">Visão geral</h1>
         
         <Link
           href="/admin/manual"
-          className="bg-white border-[1.5px] border-[#000000] rounded-lg p-4 hover:border-brand-green transition-all block md:w-[450px]"
+          className="hidden md:block bg-white border-[1.5px] border-[#000000] rounded-lg p-4 hover:border-brand-green transition-all md:w-[450px]"
         >
           <div className="font-mono text-[10px] uppercase tracking-wider text-brand-green-deep font-bold mb-0.5">
             DOCUMENTAÇÃO & USO

@@ -2,10 +2,23 @@ import { createClient } from "@/lib/supabase/server";
 import { VisaoGeralPageClient } from "@/components/admin/VisaoGeralPageClient";
 import { DEPARTMENTS, DEPARTMENT_LABEL, isPriorityTask } from "@/lib/bpo/constants";
 import { licenseStatus } from "@/lib/compliance/licenseStatus";
-import Link from "next/link";
+import { redirect } from "next/navigation";
+
+export const metadata = {
+  title: "Visão Geral | MD Ambiental",
+  description: "Painel administrativo central da plataforma.",
+};
 
 export default async function AdminPage() {
   const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
 
   const now = new Date();
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
@@ -39,7 +52,7 @@ export default async function AdminPage() {
 
   if (hasError) {
     return (
-      <div>
+      <div className="p-8 max-w-7xl mx-auto">
         <h1 className="font-display text-[28px] text-ink mb-6">Visão geral</h1>
         <div className="bg-white border border-ink/10 p-8 text-[15px] text-steel">
           <p className="mb-2">Não foi possível carregar os dados agora. Tente recarregar a página.</p>
@@ -91,23 +104,7 @@ export default async function AdminPage() {
     vehicles.filter((v) => ["vencida", "vence_em_breve"].includes(licenseStatus(v.insurance_expiry_date))).length;
 
   return (
-    <div>
-      {/* Atalho / Card para o Manual de Instruções */}
-      <div className="mb-8">
-        <Link
-          href="/admin/manual"
-          className="bg-white p-6 rounded-lg border border-ink/10 hover:border-brand-green-deep transition-all shadow-xs group block"
-        >
-          <span className="font-mono text-[11px] uppercase text-brand-green-deep block mb-1">Documentação & Uso</span>
-          <h3 className="font-display text-[18px] text-ink group-hover:text-brand-green-deep transition-colors mb-2">
-            Manual de Instruções →
-          </h3>
-          <p className="text-[13px] text-steel">
-            Consulte o guia operacional completo da plataforma e especificações arquiteturais.
-          </p>
-        </Link>
-      </div>
-
+    <div className="p-8 max-w-7xl mx-auto">
       <VisaoGeralPageClient
         kpis={{ totalCollections, completedCollections, totalVolume, activeCompanies, expiringLicenses }}
         departments={departments}
