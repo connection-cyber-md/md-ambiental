@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { HeroLeadAndCtas } from "@/features/institutional/components/HeroLeadAndCtas";
 import { heroContent } from "@/features/institutional/content/site-copy";
@@ -18,7 +20,7 @@ export function HeroSection() {
           alt="Caminhão-tanque da MD Ambiental realizando coleta de óleo lubrificante"
           fill
           priority
-          className="object-cover object-[center_30%] -z-10 brightness-105"
+          className="object-cover object-[center_30%] -z-10 brightness-105 animate-slow-zoom"
         />
 
         <div className="max-w-[1440px] mx-auto px-6 w-full flex items-center justify-between">

@@ -27,3 +27,20 @@
     @apply w-7 h-px bg-brand-amber inline-block;
   }
 }
+
+/* Efeito de Movimento de Zoom Suave (Parallax/Ken Burns) para a Imagem de Fundo */
+@keyframes slowZoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-slow-zoom {
+  animation: slowZoom 20s ease-in-out infinite;
+}
